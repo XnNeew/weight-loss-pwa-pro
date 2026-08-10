@@ -1,0 +1,29 @@
+{
+  "name": "骑行有氧模板",
+  "description": "以自行车有氧为主，低冲击、适合膝盖敏感或大体重初期减脂。",
+  "schedule": [
+    { "name": "起床喝水", "time": "07:00", "duration": 10, "desc": "先喝200ml温水", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "晨间拉伸", "time": "07:10", "duration": 15, "desc": "激活身体", "type": "exercise", "remind": true, "remindBefore": 0 },
+    { "name": "吃早餐", "time": "07:30", "duration": 25, "desc": "蛋白质+粗粮+蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "工作/通勤", "time": "08:00", "duration": 240, "desc": "每小时起身活动", "type": "routine", "remind": false, "remindBefore": 0 },
+    { "name": "午餐", "time": "12:00", "duration": 30, "desc": "1拳主食+1掌蛋白+2拳蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "下午加餐", "time": "15:30", "duration": 15, "desc": "水果/酸奶/少量坚果", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "骑车下班", "time": "17:40", "duration": 45, "desc": "绕路骑行回家", "type": "exercise", "remind": true, "remindBefore": 5 },
+    { "name": "晚餐", "time": "19:00", "duration": 30, "desc": "高蛋白、低油、大量蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "停止进食", "time": "21:00", "duration": 5, "desc": "之后只喝水", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "准备入睡", "time": "22:30", "duration": 20, "desc": "放下手机，调暗灯光", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "睡觉了", "time": "22:50", "duration": 10, "desc": "目标入睡窗口22:50-23:10", "type": "sleep", "remind": true, "remindBefore": 0 }
+  ],
+  "training": {
+    "name": "骑行有氧周",
+    "days": {
+      "0": { "type": "rest", "activity": "休息/恢复", "duration": 0, "distance": 0, "note": "拉伸、散步" },
+      "1": { "type": "bike", "activity": "骑车通勤", "duration": 50, "distance": 0, "note": "心率130" },
+      "2": { "type": "bike", "activity": "骑车有氧", "duration": 60, "distance": 0, "note": "心率130-140" },
+      "3": { "type": "bike", "activity": "骑车通勤", "duration": 50, "distance": 0, "note": "心率130" },
+      "4": { "type": "bike", "activity": "骑车有氧", "duration": 60, "distance": 0, "note": "心率130-140" },
+      "5": { "type": "swim", "activity": "游泳", "duration": 45, "distance": 1000, "note": "放松" },
+      "6": { "type": "hike", "activity": "徒步/骑行", "duration": 90, "distance": 0, "note": "中高强度" }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "游泳减脂模板",
+  "description": "以蛙泳为主，搭配骑车和拳击，适合体重基数较大、膝关节保护优先的用户。",
+  "schedule": [
+    { "name": "起床喝水", "time": "07:00", "duration": 10, "desc": "先喝200ml温水", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "晨练（骑车/快走）", "time": "07:10", "duration": 20, "desc": "心率保持120左右", "type": "exercise", "remind": true, "remindBefore": 0 },
+    { "name": "吃早餐", "time": "07:30", "duration": 25, "desc": "蛋白质+粗粮+蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "工作/通勤", "time": "08:00", "duration": 240, "desc": "每小时起身活动", "type": "routine", "remind": false, "remindBefore": 0 },
+    { "name": "午餐", "time": "12:00", "duration": 30, "desc": "1拳主食+1掌蛋白+2拳蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "下午加餐", "time": "15:30", "duration": 15, "desc": "水果/酸奶/少量坚果", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "出发去泳池", "time": "17:30", "duration": 10, "desc": "收拾装备出发", "type": "transition", "remind": true, "remindBefore": 5 },
+    { "name": "蛙泳训练", "time": "17:50", "duration": 55, "desc": "完成今日训练量", "type": "exercise", "remind": true, "remindBefore": 0 },
+    { "name": "晚餐", "time": "19:30", "duration": 30, "desc": "高蛋白、低油、大量蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "停止进食", "time": "21:00", "duration": 5, "desc": "之后只喝水", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "准备入睡", "time": "22:30", "duration": 20, "desc": "放下手机，调暗灯光", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "睡觉了", "time": "22:50", "duration": 10, "desc": "目标入睡窗口22:50-23:10", "type": "sleep", "remind": true, "remindBefore": 0 }
+  ],
+  "training": {
+    "name": "游泳专项周",
+    "days": {
+      "0": { "type": "rest", "activity": "休息/恢复", "duration": 0, "distance": 0, "note": "拉伸、散步" },
+      "1": { "type": "swim", "activity": "蛙泳训练", "duration": 50, "distance": 1200, "note": "技术+耐力" },
+      "2": { "type": "bike", "activity": "骑车有氧", "duration": 45, "distance": 0, "note": "心率130" },
+      "3": { "type": "swim", "activity": "蛙泳训练", "duration": 50, "distance": 1500, "note": "间歇训练" },
+      "4": { "type": "bike", "activity": "骑车有氧", "duration": 45, "distance": 0, "note": "心率130" },
+      "5": { "type": "swim", "activity": "蛙泳训练", "duration": 60, "distance": 1800, "note": "长距离稳定" },
+      "6": { "type": "box", "activity": "拳击/核心", "duration": 60, "distance": 0, "note": "中高强度" }
+    }
+  }
+}

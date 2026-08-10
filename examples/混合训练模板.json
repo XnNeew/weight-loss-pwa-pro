@@ -1,0 +1,29 @@
+{
+  "name": "混合训练模板",
+  "description": "游泳、骑车、力量、拳击轮换，适合有一定基础、希望避免平台期的用户。",
+  "schedule": [
+    { "name": "起床喝水", "time": "07:00", "duration": 10, "desc": "先喝200ml温水", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "晨练（快走）", "time": "07:10", "duration": 20, "desc": "心率保持120左右", "type": "exercise", "remind": true, "remindBefore": 0 },
+    { "name": "吃早餐", "time": "07:30", "duration": 25, "desc": "蛋白质+粗粮+蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "工作/通勤", "time": "08:00", "duration": 240, "desc": "每小时起身活动", "type": "routine", "remind": false, "remindBefore": 0 },
+    { "name": "午餐", "time": "12:00", "duration": 30, "desc": "1拳主食+1掌蛋白+2拳蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "下午加餐", "time": "15:30", "duration": 15, "desc": "水果/酸奶/少量坚果", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "晚间训练", "time": "18:00", "duration": 60, "desc": "按训练计划执行", "type": "exercise", "remind": true, "remindBefore": 10 },
+    { "name": "晚餐", "time": "19:30", "duration": 30, "desc": "高蛋白、低油、大量蔬菜", "type": "meal", "remind": true, "remindBefore": 0 },
+    { "name": "停止进食", "time": "21:00", "duration": 5, "desc": "之后只喝水", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "准备入睡", "time": "22:30", "duration": 20, "desc": "放下手机，调暗灯光", "type": "routine", "remind": true, "remindBefore": 0 },
+    { "name": "睡觉了", "time": "22:50", "duration": 10, "desc": "目标入睡窗口22:50-23:10", "type": "sleep", "remind": true, "remindBefore": 0 }
+  ],
+  "training": {
+    "name": "混合训练周",
+    "days": {
+      "0": { "type": "rest", "activity": "休息/恢复", "duration": 0, "distance": 0, "note": "拉伸、泡沫轴" },
+      "1": { "type": "swim", "activity": "蛙泳", "duration": 50, "distance": 1200, "note": "耐力" },
+      "2": { "type": "strength", "activity": "力量训练", "duration": 50, "distance": 0, "note": "胸背腿大肌群" },
+      "3": { "type": "bike", "activity": "骑车有氧", "duration": 45, "distance": 0, "note": "心率130" },
+      "4": { "type": "box", "activity": "拳击/HIIT", "duration": 50, "distance": 0, "note": "中高强度" },
+      "5": { "type": "swim", "activity": "蛙泳", "duration": 60, "distance": 1500, "note": "" },
+      "6": { "type": "hike", "activity": "徒步", "duration": 90, "distance": 0, "note": "" }
+    }
+  }
+}
