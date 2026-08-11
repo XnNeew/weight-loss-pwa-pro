@@ -1,9 +1,9 @@
-const CACHE_NAME = 'weight-loss-pwa-pro-v1';
+const CACHE_NAME = 'weight-loss-pwa-pro-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon.svg'
+  './',
+  './index.html',
+  './manifest.json',
+  './icon.svg'
 ];
 
 self.addEventListener('install', event => {
@@ -30,9 +30,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        if (response) {
-          return response;
-        }
+        if (response) return response;
         return fetch(event.request).then(networkResponse => {
           if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
             return networkResponse;
@@ -42,6 +40,8 @@ self.addEventListener('fetch', event => {
             cache.put(event.request, responseToCache);
           });
           return networkResponse;
+        }).catch(() => {
+          return caches.match('./index.html');
         });
       })
   );
