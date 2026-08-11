@@ -1,36 +1,66 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light" data-font="normal">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0ea5e9">
-  <meta name="description" content="高自由度个人减肥计划监控与提醒平台">
+  <meta name="description" content="AI 个性化减肥计划监控平台">
   <title>减肥监控台 Pro</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon.svg">
   <style>
-    :root { --primary: #0ea5e9; --primary-dark: #0284c7; --primary-light: #e0f2fe; --success: #22c55e; --warning: #f59e0b; --danger: #ef4444; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-light: #64748b; --border: #e2e8f0; --shadow: 0 1px 3px rgba(0,0,0,0.08); --radius: 16px; --nav-height: 68px; --safe-bottom: env(safe-area-inset-bottom, 0px); --font-base: 16px; }
+    :root { --primary: #0ea5e9; --primary-dark: #0284c7; --primary-light: #e0f2fe; --success: #22c55e; --warning: #f59e0b; --danger: #ef4444; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-light: #64748b; --border: #e2e8f0; --shadow: 0 1px 3px rgba(0,0,0,0.08); --radius: 16px; --nav-height: 70px; --safe-bottom: env(safe-area-inset-bottom, 0px); --font-base: 16px; }
     [data-theme="dark"] { --primary: #38bdf8; --primary-dark: #0ea5e9; --primary-light: #0c4a6e; --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --text-light: #94a3b8; --border: #334155; --shadow: 0 1px 3px rgba(0,0,0,0.3); }
     [data-font="small"] { --font-base: 14px; } [data-font="normal"] { --font-base: 16px; } [data-font="large"] { --font-base: 18px; }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); height: 100%; font-size: var(--font-base); -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); height: 100%; font-size: var(--font-base); overscroll-behavior-y: none; }
     #app { max-width: 520px; margin: 0 auto; min-height: 100%; padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + 16px); position: relative; }
+    h1, h2, h3, h4, p { margin: 0; }
     header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 20px 16px 16px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(14,165,233,0.3); }
-    header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+    header h1 { font-size: 20px; font-weight: 700; }
     .header-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 13px; opacity: 0.95; }
     .tab-content { display: none; padding: 16px; animation: fadeIn 0.25s ease; }
     .tab-content.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .card { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border); }
-    .card-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--text); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .card-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .card-title-actions { display: flex; gap: 8px; }
     .status-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; text-align: center; border: none; }
     .status-card .label { font-size: 13px; opacity: 0.9; }
-    .status-card .value { font-size: 24px; font-weight: 700; margin: 6px 0; }
+    .status-card .value { font-size: 22px; font-weight: 700; margin: 6px 0; }
     .status-card .desc { font-size: 13px; opacity: 0.85; }
     .countdown { font-variant-numeric: tabular-nums; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--primary); color: white; border: none; border-radius: 24px; padding: 12px 18px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px; -webkit-appearance: none; }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn.secondary { background: var(--border); color: var(--text); }
+    .btn.success { background: var(--success); }
+    .btn.danger { background: var(--danger); }
+    .btn.small { width: auto; padding: 7px 14px; font-size: 13px; margin-top: 0; }
+    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .input-group { margin-bottom: 14px; }
+    .input-group label { display: block; font-size: 13px; color: var(--text-light); margin-bottom: 6px; font-weight: 600; }
+    .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; font-size: 16px; background: var(--card); color: var(--text); -webkit-appearance: none; }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .input-row.three { grid-template-columns: 1fr 1fr 1fr; }
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .toggle-row:last-child { border-bottom: none; }
+    .toggle-switch { width: 48px; height: 28px; background: var(--border); border-radius: 14px; position: relative; cursor: pointer; transition: background 0.2s; }
+    .toggle-switch.on { background: var(--primary); }
+    .toggle-switch::after { content: ''; position: absolute; width: 24px; height: 24px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: transform 0.2s; }
+    .toggle-switch.on::after { transform: translateX(20px); }
+    .progress-bar { height: 12px; background: var(--border); border-radius: 6px; overflow: hidden; margin: 8px 0; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--success)); border-radius: 6px; transition: width 0.5s ease; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-box { background: var(--bg); border-radius: 12px; padding: 14px; text-align: center; }
+    .stat-box .number { font-size: 20px; font-weight: 700; color: var(--primary); }
+    .stat-box .label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+    .bmi-tag { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; margin-top: 6px; }
+    .bmi-obese { background: #fee2e2; color: #991b1b; }
+    .bmi-overweight { background: #fef3c7; color: #92400e; }
+    .bmi-normal { background: #dcfce7; color: #166534; }
     .timeline { position: relative; padding-left: 28px; }
     .timeline::before { content: ''; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
     .timeline-item { position: relative; padding: 10px 0; opacity: 0.6; }
@@ -42,30 +72,6 @@
     .timeline-time { font-size: 12px; color: var(--text-light); font-weight: 600; }
     .timeline-name { font-size: 15px; font-weight: 700; margin: 2px 0; }
     .timeline-desc { font-size: 12px; color: var(--text-light); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--primary); color: white; border: none; border-radius: 24px; padding: 11px 18px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 8px; -webkit-appearance: none; transition: filter 0.15s; }
-    .btn:active { transform: scale(0.98); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn.secondary { background: var(--border); color: var(--text); }
-    .btn.success { background: var(--success); }
-    .btn.danger { background: var(--danger); }
-    .btn.small { width: auto; padding: 7px 12px; font-size: 13px; margin-top: 0; }
-    .input-group { margin-bottom: 14px; }
-    .input-group label { display: block; font-size: 13px; color: var(--text-light); margin-bottom: 6px; font-weight: 600; }
-    .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; font-size: 16px; background: var(--card); color: var(--text); -webkit-appearance: none; }
-    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .progress-bar { height: 12px; background: var(--border); border-radius: 6px; overflow: hidden; margin: 8px 0; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--success)); border-radius: 6px; transition: width 0.5s ease; }
-    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .stat-box { background: var(--bg); border-radius: 12px; padding: 14px; text-align: center; }
-    .stat-box .number { font-size: 22px; font-weight: 700; color: var(--primary); }
-    .stat-box .label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
-    .bmi-tag { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; margin-top: 6px; }
-    .bmi-obese { background: #fee2e2; color: #991b1b; }
-    .bmi-overweight { background: #fef3c7; color: #92400e; }
-    .bmi-normal { background: #dcfce7; color: #166534; }
-    .phase-card { background: var(--bg); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
-    .phase-card h4 { margin: 0 0 6px; font-size: 15px; }
-    .phase-card p { margin: 0; font-size: 13px; color: var(--text-light); }
     .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
     .week-day { background: var(--bg); border-radius: 10px; padding: 10px 4px; font-size: 12px; cursor: pointer; border: 2px solid transparent; }
     .week-day.active { border-color: var(--primary); }
@@ -84,16 +90,17 @@
     .type-sleep { border-left-color: #8b5cf6; } .type-sleep .time { color: #8b5cf6; }
     .type-transition { border-left-color: #06b6d4; } .type-transition .time { color: #06b6d4; }
     .template-card { background: var(--bg); border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .template-card h4 { margin: 0; font-size: 15px; }
-    .template-card p { margin: 4px 0 0; font-size: 12px; color: var(--text-light); }
+    .template-card h4 { font-size: 15px; }
+    .template-card p { font-size: 12px; color: var(--text-light); margin-top: 4px; }
     .diet-card { border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 12px; }
-    .diet-card h4 { margin: 0 0 6px; font-size: 15px; }
-    .diet-card p { margin: 0; font-size: 13px; color: var(--text-light); }
+    .diet-card h4 { font-size: 15px; margin-bottom: 4px; }
+    .diet-card p { font-size: 13px; color: var(--text-light); }
     .diet-card .tips { font-size: 12px; color: var(--danger); margin-top: 6px; }
     .food-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .food-item { font-size: 12px; padding: 4px 10px; border-radius: 12px; background: var(--bg); }
     .food-item.good { background: #dcfce7; color: #166534; }
     .food-item.bad { background: #fee2e2; color: #991b1b; }
+    .food-item.neutral { background: var(--primary-light); color: var(--primary-dark); }
     nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 520px; background: color-mix(in srgb, var(--card) 96%, transparent); backdrop-filter: blur(10px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 8px 0 calc(8px + var(--safe-bottom)); z-index: 1000; }
     .nav-btn { flex: 1; text-align: center; background: none; border: none; color: var(--text-light); font-size: 10px; padding: 6px 0; cursor: pointer; }
     .nav-btn .icon { font-size: 20px; display: block; margin-bottom: 2px; }
@@ -109,27 +116,59 @@
     .modal { background: var(--card); width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; border-radius: 20px 20px 0 0; padding: 20px 16px calc(20px + var(--safe-bottom)); animation: slideUp 0.25s ease; }
     @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .modal-header h3 { margin: 0; font-size: 18px; }
+    .modal-header h3 { font-size: 18px; }
     .modal-close { background: var(--bg); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; color: var(--text); }
-    .password-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
-    .password-overlay.show { display: flex; }
-    .password-overlay h2 { margin: 0 0 12px; }
-    .password-overlay p { color: var(--text-light); margin-bottom: 20px; }
-    .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
-    .toggle-row:last-child { border-bottom: none; }
-    .toggle-switch { width: 48px; height: 28px; background: var(--border); border-radius: 14px; position: relative; cursor: pointer; transition: background 0.2s; }
-    .toggle-switch.on { background: var(--primary); }
-    .toggle-switch::after { content: ''; position: absolute; width: 24px; height: 24px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: transform 0.2s; }
-    .toggle-switch.on::after { transform: translateX(20px); }
     .chart-container { position: relative; height: 200px; margin: 10px 0; }
     .chart-container canvas { width: 100%; height: 100%; }
     .empty-state { text-align: center; color: var(--text-light); padding: 24px; font-size: 14px; }
     .hidden { display: none !important; }
     .danger-zone { border: 1px solid var(--danger); border-radius: 12px; padding: 12px; margin-top: 14px; }
     .danger-zone h4 { margin: 0 0 8px; color: var(--danger); font-size: 14px; }
+    .warning-box { background: #fef3c7; border: 1px solid #fde68a; border-radius: 12px; padding: 12px; margin: 12px 0; color: #92400e; font-size: 13px; }
+    .info-box { background: var(--primary-light); border-radius: 12px; padding: 12px; margin: 12px 0; color: var(--primary-dark); font-size: 13px; }
+    .onboarding { position: fixed; inset: 0; background: var(--bg); z-index: 6000; display: none; flex-direction: column; }
+    .onboarding.show { display: flex; }
+    .onboarding-header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 24px 20px; text-align: center; }
+    .onboarding-header h2 { font-size: 22px; margin-bottom: 6px; }
+    .onboarding-header p { font-size: 13px; opacity: 0.9; }
+    .onboarding-body { flex: 1; overflow-y: auto; padding: 20px; }
+    .onboarding-footer { padding: 16px 20px calc(16px + var(--safe-bottom)); border-top: 1px solid var(--border); background: var(--card); display: flex; gap: 10px; }
+    .step-indicator { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; }
+    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+    .step-dot.active { background: var(--primary); }
+    .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 8px 14px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); font-size: 14px; cursor: pointer; }
+    .chip.selected { background: var(--primary); color: white; border-color: var(--primary); }
+    .meal-section { margin-bottom: 16px; }
+    .meal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .meal-title { font-weight: 700; font-size: 15px; }
+    .meal-cal { font-size: 13px; color: var(--text-light); }
+    .food-entry { display: flex; align-items: center; gap: 10px; background: var(--bg); border-radius: 12px; padding: 10px; margin-bottom: 8px; }
+    .food-entry .name { flex: 1; font-size: 14px; }
+    .food-entry .cal { font-size: 13px; color: var(--text-light); }
+    .food-entry input { width: 60px; text-align: center; padding: 6px; border: 1px solid var(--border); border-radius: 8px; }
+    .summary-bar { display: flex; justify-content: space-around; padding: 12px 0; background: var(--bg); border-radius: 12px; margin-bottom: 12px; }
+    .summary-bar div { text-align: center; }
+    .summary-bar .num { font-size: 18px; font-weight: 700; color: var(--primary); }
+    .summary-bar .txt { font-size: 11px; color: var(--text-light); }
+    .password-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+    .password-overlay.show { display: flex; }
+
   </style>
 </head>
 <body>
+  <div id="onboarding" class="onboarding">
+    <div class="onboarding-header">
+      <h2 id="ob-title">欢迎使用减肥监控台 Pro</h2>
+      <p id="ob-subtitle">回答问题，生成你的专属方案</p>
+    </div>
+    <div class="onboarding-body" id="ob-body"></div>
+    <div class="onboarding-footer">
+      <button class="btn secondary" id="ob-prev" style="flex:1;">上一步</button>
+      <button class="btn" id="ob-next" style="flex:1;">下一步</button>
+    </div>
+  </div>
+
   <div id="password-overlay" class="password-overlay">
     <h2>🔒 数据已加密</h2>
     <p>请输入本地解锁密码以继续使用</p>
@@ -154,15 +193,37 @@
     </div>
 
     <div id="tab-data" class="tab-content">
-      <div class="card"><div class="card-title">⚖️ 记录数据</div>
+      <div class="card"><div class="card-title">⚖️ 记录身体数据</div>
         <div class="input-row"><div class="input-group"><label>指标</label><select id="metric-select"></select></div><div class="input-group"><label>数值</label><input type="number" id="metric-value" step="0.1" placeholder="0.0"></div></div>
         <div class="input-group"><label>日期</label><input type="date" id="metric-date"></div>
         <div class="input-group"><label>备注（可选）</label><input type="text" id="metric-note" placeholder="例如：游泳后、旅行归来"></div>
         <button class="btn" id="record-metric">记录</button>
       </div>
-      <div class="card"><div class="card-title">📊 当前状态</div><div class="stat-grid"><div class="stat-box"><div class="number" id="bmi-value">--</div><div class="label">BMI</div></div><div class="stat-box"><div class="number" id="bmi-status">--</div><div class="label">体型</div></div></div><div id="bmi-tag" class="bmi-tag bmi-obese">肥胖</div></div>
+      <div class="card">
+        <div class="card-title">📊 当前状态</div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="number" id="bmi-value">--</div><div class="label">BMI</div></div>
+          <div class="stat-box"><div class="number" id="bmi-status">--</div><div class="label">体型</div></div>
+          <div class="stat-box"><div class="number" id="bmr-value">--</div><div class="label">基础代谢</div></div>
+          <div class="stat-box"><div class="number" id="tdee-value">--</div><div class="label">每日消耗</div></div>
+        </div>
+        <div id="bmi-tag" class="bmi-tag bmi-obese">肥胖</div>
+        <div class="info-box" id="intake-recommend" style="margin-top:12px;">建议每日摄入：-- kcal</div>
+      </div>
       <div class="card"><div class="card-title" style="justify-content:space-between;"><span>📈 趋势图</span><select id="chart-metric" class="btn small secondary" style="width:auto;"></select></div><div class="chart-container"><canvas id="trend-chart"></canvas></div></div>
       <div class="card"><div class="card-title" style="justify-content:space-between;"><span>🎯 阶段目标</span><button class="btn small" id="add-phase-btn">添加</button></div><div id="phases-list"></div></div>
+    </div>
+
+    <div id="tab-diet" class="tab-content">
+      <div class="card">
+        <div class="card-title">🍱 今日饮食记录</div>
+        <div class="summary-bar"><div><div class="num" id="diet-total">0</div><div class="txt">已摄入</div></div><div><div class="num" id="diet-target">0</div><div class="txt">建议摄入</div></div><div><div class="num" id="diet-remain">0</div><div class="txt">剩余</div></div></div>
+        <div id="diet-records"></div>
+        <button class="btn" id="add-food-btn">+ 添加食物</button>
+      </div>
+      <div class="card"><div class="card-title">🍽️ 饮食原则</div><div id="diet-guide"></div></div>
+      <div class="card"><div class="card-title">🟢 绿灯食物</div><div class="food-list" id="green-foods"></div></div>
+      <div class="card"><div class="card-title">🔴 红灯食物</div><div class="food-list" id="red-foods"></div></div>
     </div>
 
     <div id="tab-schedule" class="tab-content">
@@ -176,23 +237,15 @@
       <div class="card"><div class="card-title">📦 训练模板</div><div id="training-templates"></div><button class="btn secondary" id="save-training-template-btn">保存为模板</button></div>
     </div>
 
-    <div id="tab-diet" class="tab-content">
-      <div class="card"><div class="card-title">🍽️ 每日饮食参考</div><div id="diet-guide"></div></div>
-      <div class="card"><div class="card-title">🟢 绿灯食物（多吃）</div><div class="food-list" id="green-foods"></div></div>
-      <div class="card"><div class="card-title">🔴 红灯食物（少吃/避免）</div><div class="food-list" id="red-foods"></div></div>
-      <div class="card"><div class="card-title">📏 分量口诀</div><div class="diet-card"><h4>主食</h4><p>午餐 1 拳头，晚餐半拳头（或不饿省略）</p></div><div class="diet-card"><h4>蛋白质</h4><p>每餐 1 掌心大小（鸡胸肉/鱼/虾/牛肉/豆腐）</p></div><div class="diet-card"><h4>蔬菜</h4><p>每餐 2 拳头，优先绿叶菜</p></div></div>
-    </div>
-
     <div id="tab-settings" class="tab-content">
       <div class="card"><div class="card-title">👤 个人资料</div>
-        <div class="input-row"><div class="input-group"><label>身高（cm）</label><input type="number" id="setting-height" step="0.1"></div><div class="input-group"><label>出生年份</label><input type="number" id="setting-birth" min="1900" max="2100"></div></div>
-        <div class="input-group"><label>性别</label><select id="setting-gender"><option value="male">男</option><option value="female">女</option></select></div>
+        <div class="input-row three"><div class="input-group"><label>身高（cm）</label><input type="number" id="setting-height" step="0.1"></div><div class="input-group"><label>出生年份</label><input type="number" id="setting-birth" min="1900" max="2100"></div><div class="input-group"><label>性别</label><select id="setting-gender"><option value="male">男</option><option value="female">女</option></select></div></div>
         <button class="btn" id="save-profile-btn">保存资料</button>
       </div>
+      <div class="card"><div class="card-title">📝 向导方案</div><div id="wizard-summary"></div><button class="btn secondary" id="rerun-wizard-btn" style="margin-top:10px;">重新运行设置向导</button></div>
       <div class="card"><div class="card-title">🔒 本地安全</div>
         <div class="toggle-row"><span>启用本地密码加密</span><div class="toggle-switch" id="encrypt-toggle"></div></div>
         <div id="encrypt-panel" class="hidden"><div class="input-group" style="margin-top:12px;"><label>设置/修改密码</label><input type="password" id="encrypt-password" placeholder="至少 6 位"></div><button class="btn small" id="set-password-btn" style="width:auto;">设置密码</button></div>
-        <p style="font-size:12px;color:var(--text-light);margin-top:10px;">开启后，体重、目标等数据会在本设备上用密码加密。忘记密码无法恢复。</p>
       </div>
       <div class="card"><div class="card-title">🎨 界面</div>
         <div class="toggle-row"><span>深色模式</span><div class="toggle-switch" id="theme-toggle"></div></div>
@@ -209,9 +262,9 @@
     <nav>
       <button class="nav-btn active" data-tab="today"><span class="icon">📅</span><span>今日</span></button>
       <button class="nav-btn" data-tab="data"><span class="icon">📊</span><span>数据</span></button>
+      <button class="nav-btn" data-tab="diet"><span class="icon">🍱</span><span>饮食</span></button>
       <button class="nav-btn" data-tab="schedule"><span class="icon">📝</span><span>编排</span></button>
       <button class="nav-btn" data-tab="training"><span class="icon">🏋️</span><span>训练</span></button>
-      <button class="nav-btn" data-tab="diet"><span class="icon">🍽️</span><span>饮食</span></button>
       <button class="nav-btn" data-tab="settings"><span class="icon">⚙️</span><span>设置</span></button>
     </nav>
   </div>
@@ -224,36 +277,90 @@
       <div id="modal-body"></div>
     </div>
   </div>
-
   <script>
+    // ========== 食物热量库（常见中餐） ==========
+    const foodDB = [
+      // 主食
+      { id: 'rice', name: '米饭', unit: '碗', weight: 150, cal: 174, pro: 3.8, carb: 38, fat: 0.4, category: 'staple' },
+      { id: 'brownrice', name: '糙米饭', unit: '碗', weight: 150, cal: 165, pro: 3.6, carb: 35, fat: 1.2, category: 'staple' },
+      { id: 'oatmeal', name: '燕麦粥', unit: '碗', weight: 250, cal: 140, pro: 5, carb: 24, fat: 2.5, category: 'staple' },
+      { id: 'noodle', name: '面条（煮）', unit: '碗', weight: 200, cal: 220, pro: 7, carb: 43, fat: 1, category: 'staple' },
+      { id: 'bread', name: '全麦面包', unit: '片', weight: 30, cal: 75, pro: 3.5, carb: 13, fat: 1, category: 'staple' },
+      { id: 'steamedbun', name: '白面馒头', unit: '个', weight: 100, cal: 220, pro: 7, carb: 45, fat: 1, category: 'staple' },
+      { id: 'corn', name: '玉米（煮）', unit: '根', weight: 200, cal: 110, pro: 4, carb: 24, fat: 1, category: 'staple' },
+      { id: 'yam', name: '红薯（煮）', unit: '个', weight: 150, cal: 130, pro: 1.6, carb: 30, fat: 0.1, category: 'staple' },
+      { id: 'porridge', name: '白粥', unit: '碗', weight: 250, cal: 120, pro: 2.5, carb: 26, fat: 0.3, category: 'staple' },
+      { id: 'dumpling', name: '水饺（猪肉）', unit: '个', weight: 20, cal: 45, pro: 2, carb: 5, fat: 1.8, category: 'staple' },
+      // 蛋白质
+      { id: 'egg', name: '鸡蛋（煮）', unit: '个', weight: 50, cal: 70, pro: 6, carb: 0.6, fat: 5, category: 'protein' },
+      { id: 'eggwhite', name: '鸡蛋白', unit: '个', weight: 35, cal: 18, pro: 4, carb: 0.3, fat: 0, category: 'protein' },
+      { id: 'chickenbreast', name: '鸡胸肉（煮）', unit: 'g', weight: 100, cal: 165, pro: 31, carb: 0, fat: 3.6, category: 'protein' },
+      { id: 'beef', name: '瘦牛肉（煮）', unit: 'g', weight: 100, cal: 180, pro: 26, carb: 0, fat: 8, category: 'protein' },
+      { id: 'porkloin', name: '瘦猪肉', unit: 'g', weight: 100, cal: 195, pro: 20, carb: 0, fat: 12, category: 'protein' },
+      { id: 'fish', name: '清蒸鱼', unit: 'g', weight: 100, cal: 120, pro: 20, carb: 0, fat: 4, category: 'protein' },
+      { id: 'shrimp', name: '白灼虾', unit: 'g', weight: 100, cal: 95, pro: 20, carb: 0, fat: 0.5, category: 'protein' },
+      { id: 'tofu', name: '嫩豆腐', unit: 'g', weight: 100, cal: 60, pro: 6, carb: 2, fat: 3, category: 'protein' },
+      { id: 'tofu-firm', name: '老豆腐', unit: 'g', weight: 100, cal: 90, pro: 8, carb: 2, fat: 5, category: 'protein' },
+      { id: 'milk', name: '牛奶', unit: 'ml', weight: 250, cal: 135, pro: 8, carb: 10, fat: 7, category: 'protein' },
+      { id: 'soy milk', name: '无糖豆浆', unit: '杯', weight: 250, cal: 80, pro: 5, carb: 3, fat: 3, category: 'protein' },
+      { id: 'greeky', name: '无糖酸奶', unit: '杯', weight: 150, cal: 90, pro: 10, carb: 5, fat: 0, category: 'protein' },
+      { id: 'salmon', name: '三文鱼', unit: 'g', weight: 100, cal: 205, pro: 20, carb: 0, fat: 14, category: 'protein' },
+      // 蔬菜
+      { id: 'broccoli', name: '西兰花（煮）', unit: 'g', weight: 100, cal: 35, pro: 2.4, carb: 7, fat: 0.4, category: 'veg' },
+      { id: 'spinach', name: '菠菜（煮）', unit: 'g', weight: 100, cal: 25, pro: 2, carb: 4, fat: 0, category: 'veg' },
+      { id: 'cucumber', name: '黄瓜', unit: 'g', weight: 100, cal: 16, pro: 0.7, carb: 3.6, fat: 0.1, category: 'veg' },
+      { id: 'tomato', name: '番茄', unit: 'g', weight: 100, cal: 18, pro: 0.9, carb: 3.9, fat: 0.2, category: 'veg' },
+      { id: 'lettuce', name: '生菜', unit: 'g', weight: 100, cal: 15, pro: 1.4, carb: 2.9, fat: 0.2, category: 'veg' },
+      { id: 'carrot', name: '胡萝卜（煮）', unit: 'g', weight: 100, cal: 35, pro: 0.8, carb: 8, fat: 0.2, category: 'veg' },
+      { id: 'mushroom', name: '香菇（煮）', unit: 'g', weight: 100, cal: 25, pro: 2, carb: 4, fat: 0.1, category: 'veg' },
+      { id: 'cabbage', name: '卷心菜（煮）', unit: 'g', weight: 100, cal: 22, pro: 1.3, carb: 5, fat: 0, category: 'veg' },
+      { id: 'bokchoy', name: '青菜（煮）', unit: 'g', weight: 100, cal: 20, pro: 1.5, carb: 3, fat: 0, category: 'veg' },
+      // 水果
+      { id: 'apple', name: '苹果', unit: '个', weight: 200, cal: 95, pro: 0.5, carb: 25, fat: 0.3, category: 'fruit' },
+      { id: 'banana', name: '香蕉', unit: '根', weight: 120, cal: 105, pro: 1.3, carb: 27, fat: 0.4, category: 'fruit' },
+      { id: 'orange', name: '橙子', unit: '个', weight: 150, cal: 70, pro: 1.3, carb: 17, fat: 0.2, category: 'fruit' },
+      { id: 'grape', name: '葡萄', unit: 'g', weight: 100, cal: 62, pro: 0.6, carb: 16, fat: 0.3, category: 'fruit' },
+      { id: 'watermelon', name: '西瓜', unit: 'g', weight: 100, cal: 30, pro: 0.6, carb: 8, fat: 0.2, category: 'fruit' },
+      { id: 'pear', name: '梨', unit: '个', weight: 180, cal: 100, pro: 0.4, carb: 26, fat: 0.3, category: 'fruit' },
+      { id: 'kiwi', name: '猕猴桃', unit: '个', weight: 75, cal: 45, pro: 0.9, carb: 11, fat: 0.4, category: 'fruit' },
+      // 常见菜品（估算）
+      { id: 'tomatoegg', name: '番茄炒蛋', unit: '份', weight: 200, cal: 220, pro: 10, carb: 12, fat: 14, category: 'dish' },
+      { id: 'stirveg', name: '清炒时蔬', unit: '份', weight: 200, cal: 120, pro: 3, carb: 12, fat: 7, category: 'dish' },
+      { id: 'kungpao', name: '宫保鸡丁', unit: '份', weight: 250, cal: 380, pro: 22, carb: 18, fat: 24, category: 'dish' },
+      { id: 'mapo', name: '麻婆豆腐', unit: '份', weight: 200, cal: 280, pro: 12, carb: 14, fat: 18, category: 'dish' },
+      { id: 'braisedpork', name: '红烧肉', unit: '份', weight: 200, cal: 580, pro: 18, carb: 18, fat: 48, category: 'dish' },
+      { id: 'sweetpork', name: '糖醋里脊', unit: '份', weight: 200, cal: 520, pro: 16, carb: 45, fat: 30, category: 'dish' },
+      { id: 'friedchicken', name: '炸鸡', unit: '份', weight: 200, cal: 560, pro: 22, carb: 28, fat: 38, category: 'dish' },
+      { id: 'dumpling-veg', name: '素水饺', unit: '个', weight: 20, cal: 35, pro: 1.5, carb: 6, fat: 0.8, category: 'dish' },
+      { id: 'hotpot', name: '火锅（清汤）', unit: '餐', weight: 500, cal: 450, pro: 30, carb: 25, fat: 25, category: 'dish' },
+      { id: 'bbq', name: '烧烤', unit: '餐', weight: 300, cal: 650, pro: 28, carb: 30, fat: 42, category: 'dish' },
+      // 零食/饮品
+      { id: 'cola', name: '可乐', unit: '罐', weight: 330, cal: 140, pro: 0, carb: 35, fat: 0, category: 'snack' },
+      { id: 'bubbletea', name: '奶茶', unit: '杯', weight: 500, cal: 350, pro: 4, carb: 55, fat: 12, category: 'snack' },
+      { id: 'chips', name: '薯片', unit: 'g', weight: 30, cal: 160, pro: 2, carb: 15, fat: 10, category: 'snack' },
+      { id: 'chocolate', name: '巧克力', unit: 'g', weight: 20, cal: 110, pro: 1.5, carb: 12, fat: 7, category: 'snack' },
+      { id: 'nuts', name: '混合坚果', unit: 'g', weight: 15, cal: 90, pro: 3, carb: 3, fat: 8, category: 'snack' },
+      { id: 'coffee', name: '黑咖啡', unit: '杯', weight: 250, cal: 5, pro: 0, carb: 1, fat: 0, category: 'snack' },
+      { id: 'latte', name: '拿铁', unit: '杯', weight: 350, cal: 180, pro: 8, carb: 14, fat: 9, category: 'snack' }
+    ];
+    const foodCategories = {
+      staple: '🍚 主食', protein: '🥩 肉蛋奶豆', veg: '🥬 蔬菜', fruit: '🍎 水果', dish: '🍲 菜品', snack: '🍿 零食饮品'
+    };
+
+    // ========== 工具函数 ==========
     const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
     const fmtTime = (d = new Date()) => d.toTimeString().slice(0, 8);
     const fmtDate = (d = new Date()) => `${d.getMonth() + 1}月${d.getDate()}日 周${['日','一','二','三','四','五','六'][d.getDay()]}`;
     const toDateStr = (d = new Date()) => d.toISOString().split('T')[0];
-    const timeToMin = (t) => { const [h,m] = t.split(':').map(Number); return h * 60 + m; };
+    const timeToMin = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
     const minToTime = (m) => { const h = Math.floor(m / 60) % 24; const mi = m % 60; return `${String(h).padStart(2, '0')}:${String(mi).padStart(2, '0')}`; };
     const enc = new TextEncoder(); const dec = new TextDecoder();
     const b64toAB = (b64) => { const bin = atob(b64); const arr = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); return arr.buffer; };
     const abToB64 = (buf) => { const arr = new Uint8Array(buf); let bin = ''; for (let i = 0; i < arr.length; i++) bin += String.fromCharCode(arr[i]); return btoa(bin); };
 
-    async function deriveKey(password, salt) {
-      const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveKey']);
-      return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' }, keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
-    }
-    async function encryptState(plainState, password) {
-      const salt = crypto.getRandomValues(new Uint8Array(16));
-      const key = await deriveKey(password, salt);
-      const iv = crypto.getRandomValues(new Uint8Array(12));
-      const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(JSON.stringify(plainState)));
-      return { encrypted: true, salt: abToB64(salt), iv: abToB64(iv), data: abToB64(cipher) };
-    }
-    async function decryptState(cipherObj, password) {
-      const salt = new Uint8Array(b64toAB(cipherObj.salt));
-      const iv = new Uint8Array(b64toAB(cipherObj.iv));
-      const data = b64toAB(cipherObj.data);
-      const key = await deriveKey(password, salt);
-      return JSON.parse(dec.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data)));
-    }
+    async function deriveKey(password, salt) { const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveKey']); return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' }, keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']); }
+    async function encryptState(plainState, password) { const salt = crypto.getRandomValues(new Uint8Array(16)); const key = await deriveKey(password, salt); const iv = crypto.getRandomValues(new Uint8Array(12)); const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(JSON.stringify(plainState))); return { encrypted: true, salt: abToB64(salt), iv: abToB64(iv), data: abToB64(cipher) }; }
+    async function decryptState(cipherObj, password) { const salt = new Uint8Array(b64toAB(cipherObj.salt)); const iv = new Uint8Array(b64toAB(cipherObj.iv)); const data = b64toAB(cipherObj.data); const key = await deriveKey(password, salt); return JSON.parse(dec.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data))); }
 
     function showNotify(title, body, duration = 4000) {
       const el = document.getElementById('notification');
@@ -264,79 +371,18 @@
       setTimeout(() => el.classList.remove('show'), duration);
     }
 
+    // ========== 默认状态 ==========
     function createDefaultState() {
       const today = toDateStr();
-      const defaultEvents = [
-        { id: uid(), name: '起床喝水', time: '07:00', duration: 10, desc: '先喝200ml温水', type: 'routine', remind: true, remindBefore: 0 },
-        { id: uid(), name: '晨练（骑车/快走）', time: '07:10', duration: 20, desc: '心率保持120左右', type: 'exercise', remind: true, remindBefore: 0 },
-        { id: uid(), name: '吃早餐', time: '07:30', duration: 25, desc: '蛋白质+粗粮+蔬菜', type: 'meal', remind: true, remindBefore: 0 },
-        { id: uid(), name: '工作/通勤', time: '08:00', duration: 240, desc: '每小时起身活动', type: 'routine', remind: false, remindBefore: 0 },
-        { id: uid(), name: '午餐', time: '12:00', duration: 30, desc: '1拳主食+1掌蛋白+2拳蔬菜', type: 'meal', remind: true, remindBefore: 0 },
-        { id: uid(), name: '下午加餐', time: '15:30', duration: 15, desc: '水果/酸奶/少量坚果', type: 'meal', remind: true, remindBefore: 0 },
-        { id: uid(), name: '出发去泳池', time: '17:30', duration: 10, desc: '收拾装备出发', type: 'transition', remind: true, remindBefore: 5 },
-        { id: uid(), name: '蛙泳训练', time: '17:50', duration: 55, desc: '完成今日训练量', type: 'exercise', remind: true, remindBefore: 0 },
-        { id: uid(), name: '晚餐', time: '19:30', duration: 30, desc: '高蛋白、低油、大量蔬菜', type: 'meal', remind: true, remindBefore: 0 },
-        { id: uid(), name: '停止进食', time: '21:00', duration: 5, desc: '之后只喝水', type: 'routine', remind: true, remindBefore: 0 },
-        { id: uid(), name: '准备入睡', time: '22:30', duration: 20, desc: '放下手机，调暗灯光', type: 'routine', remind: true, remindBefore: 0 },
-        { id: uid(), name: '睡觉了', time: '22:50', duration: 10, desc: '目标入睡窗口22:50-23:10', type: 'sleep', remind: true, remindBefore: 0 }
-      ];
-      const defaultTrainingPlan = {
-        id: uid(), name: '标准减脂周',
-        days: {
-          '0': { type: 'rest', activity: '休息/恢复', duration: 0, distance: 0, note: '拉伸、散步' },
-          '1': { type: 'swim', activity: '蛙泳训练', duration: 50, distance: 1200, note: '技术+耐力' },
-          '2': { type: 'bike', activity: '骑车有氧', duration: 45, distance: 0, note: '心率130' },
-          '3': { type: 'swim', activity: '蛙泳训练', duration: 50, distance: 1200, note: '间歇' },
-          '4': { type: 'bike', activity: '骑车有氧', duration: 45, distance: 0, note: '心率130' },
-          '5': { type: 'swim', activity: '蛙泳训练', duration: 50, distance: 1200, note: '稳定节奏' },
-          '6': { type: 'hike', activity: '拳击/徒步', duration: 90, distance: 0, note: '中高强度' }
-        }
-      };
       return {
-        meta: { version: '2.0', createdAt: today, updatedAt: today },
-        profile: { height: 183, birthYear: 1995, gender: 'male' },
-        goals: { phases: [
-          { id: uid(), name: '第一阶段：国庆冲刺', startWeight: 103, targetWeight: 93, deadline: '2026-10-01' },
-          { id: uid(), name: '第二阶段：年底收官', startWeight: 93, targetWeight: 80, deadline: '2026-12-31' }
-        ]},
-        schedule: {
-          events: defaultEvents,
-          templates: [
-            { id: uid(), name: '标准工作日', events: [] },
-            { id: uid(), name: '旅行/外出日', events: [
-              { id: uid(), name: '起床喝水', time: '08:00', duration: 10, desc: '先喝温水', type: 'routine', remind: true, remindBefore: 0 },
-              { id: uid(), name: '户外运动', time: '08:30', duration: 30, desc: '快走/慢跑/爬楼梯', type: 'exercise', remind: true, remindBefore: 0 },
-              { id: uid(), name: '控制外食', time: '12:00', duration: 60, desc: '少油少炸，七分饱', type: 'meal', remind: true, remindBefore: 0 },
-              { id: uid(), name: '准备入睡', time: '22:30', duration: 20, desc: '保持作息', type: 'routine', remind: true, remindBefore: 0 },
-              { id: uid(), name: '睡觉了', time: '22:50', duration: 10, desc: '保证睡眠', type: 'sleep', remind: true, remindBefore: 0 }
-            ]}
-          ]
-        },
-        training: {
-          currentPlan: defaultTrainingPlan.name,
-          plans: [defaultTrainingPlan],
-          templates: [
-            { id: uid(), name: '游泳专项周', days: {
-              '0': { type: 'rest', activity: '休息', duration: 0, distance: 0, note: '' },
-              '1': { type: 'swim', activity: '蛙泳', duration: 50, distance: 1200, note: '' },
-              '2': { type: 'swim', activity: '蛙泳', duration: 50, distance: 1500, note: '' },
-              '3': { type: 'swim', activity: '蛙泳', duration: 50, distance: 1200, note: '' },
-              '4': { type: 'swim', activity: '蛙泳', duration: 50, distance: 1500, note: '' },
-              '5': { type: 'swim', activity: '蛙泳', duration: 60, distance: 1800, note: '' },
-              '6': { type: 'bike', activity: '轻松骑车', duration: 40, distance: 0, note: '' }
-            }},
-            { id: uid(), name: '骑行有氧周', days: {
-              '0': { type: 'rest', activity: '休息', duration: 0, distance: 0, note: '' },
-              '1': { type: 'bike', activity: '骑车', duration: 45, distance: 0, note: '' },
-              '2': { type: 'bike', activity: '骑车', duration: 60, distance: 0, note: '' },
-              '3': { type: 'bike', activity: '骑车', duration: 45, distance: 0, note: '' },
-              '4': { type: 'bike', activity: '骑车', duration: 60, distance: 0, note: '' },
-              '5': { type: 'swim', activity: '游泳', duration: 45, distance: 1000, note: '' },
-              '6': { type: 'hike', activity: '徒步', duration: 90, distance: 0, note: '' }
-            }}
-          ]
-        },
-        metrics: { weight: { unit: 'kg', records: [{ date: today, value: 103, note: '初始体重' }] }, waist: { unit: 'cm', records: [] }, bodyfat: { unit: '%', records: [] } },
+        meta: { version: '3.0', createdAt: today, updatedAt: today, onboardingComplete: false },
+        profile: { name: '', gender: 'male', birthYear: 1995, height: 175, weight: 80, targetWeight: 70, targetWeeks: 12, wakeTime: '07:00', sleepTime: '23:00', sports: ['swim', 'bike'], workoutTime: '18:00', workoutDays: 4, measurements: { bust: 0, waist: 0, hip: 0 } },
+        wizard: { generated: false },
+        goals: { phases: [] },
+        schedule: { events: [], templates: [] },
+        training: { currentPlan: '智能生成计划', plans: [], templates: [] },
+        metrics: { weight: { unit: 'kg', records: [] }, waist: { unit: 'cm', records: [] }, bodyfat: { unit: '%', records: [] }, bust: { unit: 'cm', records: [] }, hip: { unit: 'cm', records: [] } },
+        diet: { customFoods: [], records: {} },
         settings: { theme: 'light', fontSize: 'normal', showCards: { status: true, next: true, sleep: true, timeline: true, timer: true }, notifications: true, encryptionEnabled: false },
         encryption: { salt: '', iv: '', data: '' }
       };
@@ -346,84 +392,169 @@
     let sessionPassword = null;
     let lastNotified = null;
     let timerInterval = null, timerSeconds = 0, timerRunning = false;
+    let wizardStep = 0;
 
     async function loadState() {
       try {
         const raw = localStorage.getItem('weightLossProState');
         if (!raw) return;
         const parsed = JSON.parse(raw);
-        if (parsed.encrypted) {
-          state = parsed;
-          document.getElementById('password-overlay').classList.add('show');
-        } else {
-          state = { ...createDefaultState(), ...parsed };
-          applyTheme(); applyFont();
-        }
+        if (parsed.encrypted) { state = parsed; document.getElementById('password-overlay').classList.add('show'); }
+        else { state = { ...createDefaultState(), ...parsed }; applyTheme(); applyFont(); }
       } catch (e) { console.error(e); }
     }
     async function saveState() {
       state.meta.updatedAt = toDateStr();
       try {
-        if (state.settings.encryptionEnabled && sessionPassword) {
-          await persistEncrypted(sessionPassword);
-          return;
-        } else if (state.settings.encryptionEnabled && !sessionPassword) {
-          // 如果开启了加密但没有会话密码，仍然尝试明文保存，避免数据丢失
-        }
+        if (state.settings.encryptionEnabled && sessionPassword) { await persistEncrypted(sessionPassword); return; }
         localStorage.setItem('weightLossProState', JSON.stringify(state));
       } catch (e) { showNotify('保存失败', '浏览器存储空间不足或数据被禁用'); }
       updateAll();
     }
-    async function persistEncrypted(password) {
-      const encrypted = await encryptState(state, password);
-      localStorage.setItem('weightLossProState', JSON.stringify(encrypted));
-    }
-    async function loadEncrypted(password) {
-      const raw = localStorage.getItem('weightLossProState');
-      if (!raw) return;
-      const parsed = JSON.parse(raw);
-      if (!parsed.encrypted) { state = parsed; return; }
-      const decrypted = await decryptState(parsed, password);
-      state = decrypted;
-      state.settings.encryptionEnabled = true;
-      sessionPassword = password;
-      applyTheme(); applyFont();
-      document.getElementById('password-overlay').classList.remove('show');
-      updateAll(); showNotify('解锁成功', '欢迎使用减肥监控台 Pro');
-    }
+    async function persistEncrypted(password) { const encrypted = await encryptState(state, password); localStorage.setItem('weightLossProState', JSON.stringify(encrypted)); }
+    async function loadEncrypted(password) { const raw = localStorage.getItem('weightLossProState'); if (!raw) return; const parsed = JSON.parse(raw); if (!parsed.encrypted) { state = parsed; return; } const decrypted = await decryptState(parsed, password); state = decrypted; state.settings.encryptionEnabled = true; sessionPassword = password; applyTheme(); applyFont(); document.getElementById('password-overlay').classList.remove('show'); updateAll(); showNotify('解锁成功', '欢迎使用减肥监控台 Pro'); }
     function applyTheme() { document.documentElement.setAttribute('data-theme', state.settings.theme); }
     function applyFont() { document.documentElement.setAttribute('data-font', state.settings.fontSize); }
     function toggleClass(el, cls, on) { el.classList.toggle(cls, on); }
+
+    function calcAge() { return new Date().getFullYear() - (state.profile.birthYear || 1995); }
+    function calcBMR(weight) {
+      const w = weight || state.profile.weight || 80;
+      const h = state.profile.height || 175;
+      const a = calcAge();
+      return state.profile.gender === 'female' ? Math.round(10 * w + 6.25 * h - 5 * a - 161) : Math.round(10 * w + 6.25 * h - 5 * a + 5);
+    }
+    function calcTDEE(weight) {
+      const bmr = calcBMR(weight);
+      const days = state.profile.workoutDays || 3;
+      let factor = 1.2;
+      if (days >= 1 && days <= 2) factor = 1.375;
+      else if (days >= 3 && days <= 5) factor = 1.55;
+      else if (days >= 6) factor = 1.725;
+      return Math.round(bmr * factor);
+    }
+    function recommendedIntake() {
+      const tdee = calcTDEE(state.profile.weight);
+      const safeWeeklyLoss = Math.min(0.01 * state.profile.weight, (state.profile.weight - state.profile.targetWeight) / Math.max(1, state.profile.targetWeeks));
+      const realWeeklyLoss = Math.max(0.25, Math.min(safeWeeklyLoss, state.profile.weight * 0.01));
+      return Math.max(1200, Math.round(tdee - realWeeklyLoss * 7700 / 7));
+    }
+    function generatePlanAnalysis() {
+      const cw = state.profile.weight;
+      const tw = state.profile.targetWeight;
+      const weeks = state.profile.targetWeeks;
+      const totalLoss = cw - tw;
+      const weeklyLoss = totalLoss / Math.max(1, weeks);
+      const bmi = (cw / Math.pow((state.profile.height || 175) / 100, 2)).toFixed(1);
+      const bmr = calcBMR(cw);
+      const tdee = calcTDEE(cw);
+      const intake = recommendedIntake();
+      const safeWeekly = Math.min(0.01 * cw, totalLoss / weeks);
+      const risk = weeklyLoss > safeWeekly * 1.2;
+      return { totalLoss, weeklyLoss, bmi, bmr, tdee, intake, safeWeekly, risk };
+    }
+
+    function generatePhases() {
+      const { totalLoss, weeklyLoss, safeWeekly, risk } = generatePlanAnalysis();
+      const realWeekly = risk ? Math.max(0.3, safeWeekly) : weeklyLoss;
+      const phaseCount = Math.min(3, Math.max(1, Math.ceil(totalLoss / (realWeekly * 8))));
+      const lossPerPhase = totalLoss / phaseCount;
+      const weeksPerPhase = Math.round(lossPerPhase / realWeekly);
+      const phases = [];
+      let startDate = new Date();
+      let startW = state.profile.weight;
+      for (let i = 0; i < phaseCount; i++) {
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + weeksPerPhase * 7);
+        const targetW = Math.max(state.profile.targetWeight, startW - lossPerPhase);
+        phases.push({ id: uid(), name: `阶段${i + 1}`, startWeight: startW, targetWeight: Math.round(targetW * 10) / 10, deadline: endDate.toISOString().split('T')[0] });
+        startDate = new Date(endDate);
+        startW = targetW;
+        if (startW <= state.profile.targetWeight) break;
+      }
+      return { phases, risk, realWeekly };
+    }
+
+    function generateSchedule() {
+      const p = state.profile;
+      const wakeMin = timeToMin(p.wakeTime);
+      const sportMin = timeToMin(p.workoutTime);
+      let events = [
+        { id: uid(), name: '起床喝水', time: p.wakeTime, duration: 10, desc: '先喝200ml温水', type: 'routine', remind: true, remindBefore: 0 },
+        { id: uid(), name: '晨练/拉伸', time: minToTime(wakeMin + 10), duration: 20, desc: '轻度活动唤醒身体', type: 'exercise', remind: true, remindBefore: 0 },
+        { id: uid(), name: '吃早餐', time: minToTime(wakeMin + 35), duration: 25, desc: '蛋白质+粗粮+蔬菜', type: 'meal', remind: true, remindBefore: 0 },
+        { id: uid(), name: '午餐', time: '12:00', duration: 30, desc: '1拳主食+1掌蛋白+2拳蔬菜', type: 'meal', remind: true, remindBefore: 0 },
+        { id: uid(), name: '下午加餐', time: '15:30', duration: 15, desc: '水果/酸奶/少量坚果', type: 'meal', remind: true, remindBefore: 0 }
+      ];
+      // 运动安排
+      const plan = currentPlan();
+      const todayDow = new Date().getDay();
+      const todayTraining = plan && plan.days ? plan.days[todayDow] : null;
+      if (todayTraining && todayTraining.type !== 'rest') {
+        events.push({ id: uid(), name: '准备训练', time: minToTime(sportMin - 10), duration: 10, desc: '换装备/热身', type: 'transition', remind: true, remindBefore: 0 });
+        events.push({ id: uid(), name: todayTraining.activity, time: p.workoutTime, duration: todayTraining.duration || 45, desc: `${typeLabels[todayTraining.type] || '运动'}训练`, type: 'exercise', remind: true, remindBefore: 0 });
+        events.push({ id: uid(), name: '晚餐', time: minToTime(sportMin + (todayTraining.duration || 45) + 15), duration: 30, desc: '高蛋白、低油、大量蔬菜', type: 'meal', remind: true, remindBefore: 0 });
+      } else {
+        events.push({ id: uid(), name: '晚餐', time: '18:30', duration: 30, desc: '高蛋白、低油、大量蔬菜', type: 'meal', remind: true, remindBefore: 0 });
+      }
+      events.push({ id: uid(), name: '停止进食', time: '21:00', duration: 5, desc: '之后只喝水', type: 'routine', remind: true, remindBefore: 0 });
+      events.push({ id: uid(), name: '准备入睡', time: minToTime(timeToMin(p.sleepTime) - 30), duration: 20, desc: '放下手机，调暗灯光', type: 'routine', remind: true, remindBefore: 0 });
+      events.push({ id: uid(), name: '睡觉了', time: p.sleepTime, duration: 10, desc: `目标入睡时间${p.sleepTime}`, type: 'sleep', remind: true, remindBefore: 0 });
+      return events.sort((a, b) => timeToMin(a.time) - timeToMin(b.time));
+    }
+
+    function generateTrainingPlan() {
+      const p = state.profile;
+      const sports = p.sports && p.sports.length ? p.sports : ['swim', 'bike'];
+      const days = {};
+      const restDay = 0;
+      let sportIdx = 0;
+      const schedulePattern = [1, 2, 3, 4, 5, 6, 0]; // Mon-Sun preference
+      const workoutSlots = Math.min(p.workoutDays, 6);
+      const activeDays = [];
+      for (let i = 0; i < 7; i++) {
+        if (activeDays.length < workoutSlots && i !== restDay) activeDays.push(i);
+      }
+      for (let d = 0; d < 7; d++) {
+        if (!activeDays.includes(d) || d === restDay) {
+          days[d] = { type: 'rest', activity: '休息/恢复', duration: 0, distance: 0, note: '拉伸、散步' };
+        } else {
+          const t = sports[sportIdx % sports.length];
+          const cfg = typeConfig[t] || typeConfig.other;
+          days[d] = { type: t, activity: cfg.activity, duration: cfg.duration, distance: cfg.distance, note: cfg.note };
+          sportIdx++;
+        }
+      }
+      return { id: uid(), name: '智能生成计划', days };
+    }
+
+    const typeIcons = { rest: '😴', swim: '🏊', bike: '🚴', run: '🏃', hike: '🥾', box: '🥊', strength: '💪', yoga: '🧘', other: '⭕' };
+    const typeLabels = { rest: '休息', swim: '游泳', bike: '骑车', run: '跑步', hike: '徒步', box: '拳击', strength: '力量', yoga: '瑜伽', other: '其他' };
+    const typeConfig = {
+      swim: { activity: '蛙泳训练', duration: 50, distance: 1200, note: '保护关节，提升心肺' },
+      bike: { activity: '骑车有氧', duration: 45, distance: 0, note: '心率保持在130左右' },
+      run: { activity: '慢跑', duration: 35, distance: 0, note: '体重较大者谨慎选择' },
+      hike: { activity: '户外徒步', duration: 60, distance: 0, note: '中低强度有氧' },
+      box: { activity: '拳击/HIIT', duration: 45, distance: 0, note: '中高强度' },
+      strength: { activity: '力量训练', duration: 50, distance: 0, note: '大肌群训练' },
+      yoga: { activity: '瑜伽/拉伸', duration: 40, distance: 0, note: '放松与柔韧性' },
+      other: { activity: '自定义运动', duration: 45, distance: 0, note: '' }
+    };
+    const dayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    function currentPlan() { return state.training.plans.find(p => p.name === state.training.currentPlan) || state.training.plans[0] || { days: {} }; }
 
     function getCurrentEvent() {
       const now = new Date();
       const currentMin = now.getHours() * 60 + now.getMinutes();
       let current = null, next = null;
       const events = [...state.schedule.events].sort((a, b) => timeToMin(a.time) - timeToMin(b.time));
-      for (const s of events) {
-        const sm = timeToMin(s.time);
-        const em = sm + (s.duration || 0);
-        if (currentMin >= sm && currentMin < em) current = s;
-        if (sm > currentMin && !next) next = s;
-      }
-      if (!next) next = events[0];
+      for (const s of events) { const sm = timeToMin(s.time); const em = sm + (s.duration || 0); if (currentMin >= sm && currentMin < em) current = s; if (sm > currentMin && !next) next = s; }
+      if (!next) next = events[0] || { name: '无安排', time: '00:00' };
       return { current, next, events };
     }
-    function parseNextTime(t) {
-      const [h, m] = t.split(':').map(Number);
-      const now = new Date();
-      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0);
-      if (d <= now) d.setDate(d.getDate() + 1);
-      return d;
-    }
-    function formatCountdown(ms) {
-      if (ms <= 0) return '00:00:00';
-      const ts = Math.floor(ms / 1000);
-      const h = Math.floor(ts / 3600);
-      const m = Math.floor((ts % 3600) / 60);
-      const s = ts % 60;
-      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    }
+    function parseNextTime(t) { const [h, m] = t.split(':').map(Number); const now = new Date(); const d = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0); if (d <= now) d.setDate(d.getDate() + 1); return d; }
+    function formatCountdown(ms) { if (ms <= 0) return '00:00:00'; const ts = Math.floor(ms / 1000); const h = Math.floor(ts / 3600); const m = Math.floor((ts % 3600) / 60); const s = ts % 60; return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`; }
+
     function renderToday() {
       const { current, next, events } = getCurrentEvent();
       document.getElementById('current-event').textContent = current ? current.name : '自由活动';
@@ -432,43 +563,42 @@
       document.getElementById('next-countdown').textContent = formatCountdown(parseNextTime(next.time) - now);
       document.getElementById('next-event-name').textContent = `下一步：${next.name}`;
       const sleepStatus = document.getElementById('sleep-status');
-      if (now.getHours() >= 23 || now.getHours() < 7) {
-        sleepStatus.textContent = '已进入睡眠时间，早点休息';
-        document.getElementById('sleep-countdown').textContent = '🌙';
-      } else {
-        const diff = parseNextTime('22:50') - now;
-        if (diff <= 0) {
-          sleepStatus.textContent = '该准备睡觉了';
-          document.getElementById('sleep-countdown').textContent = '00:00:00';
-        } else {
-          sleepStatus.textContent = '距离目标入睡还有';
-          document.getElementById('sleep-countdown').textContent = formatCountdown(diff);
-        }
-      }
+      if (now.getHours() >= 23 || now.getHours() < 7) { sleepStatus.textContent = '已进入睡眠时间，早点休息'; document.getElementById('sleep-countdown').textContent = '🌙'; }
+      else { const diff = parseNextTime(state.profile.sleepTime) - now; if (diff <= 0) { sleepStatus.textContent = '该准备睡觉了'; document.getElementById('sleep-countdown').textContent = '00:00:00'; } else { sleepStatus.textContent = '距离目标入睡还有'; document.getElementById('sleep-countdown').textContent = formatCountdown(diff); } }
       if (!state.settings.showCards.sleep) document.getElementById('card-sleep').classList.add('hidden'); else document.getElementById('card-sleep').classList.remove('hidden');
       if (!state.settings.showCards.timeline) document.getElementById('card-timeline').classList.add('hidden'); else document.getElementById('card-timeline').classList.remove('hidden');
       if (!state.settings.showCards.timer) document.getElementById('card-timer').classList.add('hidden'); else document.getElementById('card-timer').classList.remove('hidden');
       const currentMin = now.getHours() * 60 + now.getMinutes();
-      document.getElementById('today-timeline').innerHTML = events.map(s => {
-        const sm = timeToMin(s.time);
-        const em = sm + (s.duration || 0);
-        let cls = '';
-        if (currentMin >= sm && currentMin < em) cls = 'active';
-        else if (currentMin >= em) cls = 'past';
-        return `<div class="timeline-item ${cls}"><div class="timeline-dot"></div><div class="timeline-time">${s.time}${s.duration ? ' - ' + minToTime(em) : ''}</div><div class="timeline-name">${s.name}</div><div class="timeline-desc">${s.desc}</div></div>`;
-      }).join('');
+      document.getElementById('today-timeline').innerHTML = events.map(s => { const sm = timeToMin(s.time); const em = sm + (s.duration || 0); let cls = ''; if (currentMin >= sm && currentMin < em) cls = 'active'; else if (currentMin >= em) cls = 'past'; return `<div class="timeline-item ${cls}"><div class="timeline-dot"></div><div class="timeline-time">${s.time}${s.duration ? ' - ' + minToTime(em) : ''}</div><div class="timeline-name">${s.name}</div><div class="timeline-desc">${s.desc}</div></div>`; }).join('');
     }
 
-    function getLastMetric(key) {
-      const recs = state.metrics[key]?.records;
-      if (!recs || recs.length === 0) return null;
-      return recs[recs.length - 1].value;
+    function getLastMetric(key) { const recs = state.metrics[key]?.records; if (!recs || recs.length === 0) return null; return recs[recs.length - 1].value; }
+    function bmiLabel(bmi) { if (bmi >= 28) return { text: '肥胖', class: 'bmi-obese' }; if (bmi >= 24) return { text: '超重', class: 'bmi-overweight' }; return { text: '正常', class: 'bmi-normal' }; }
+
+    function renderData() {
+      const metricSelect = document.getElementById('metric-select');
+      const chartMetric = document.getElementById('chart-metric');
+      const metricNames = { weight: '体重', waist: '腰围', bodyfat: '体脂率', bust: '胸围', hip: '臀围' };
+      const opts = Object.keys(state.metrics).map(k => `<option value="${k}">${metricNames[k] || k} (${state.metrics[k].unit})</option>`).join('');
+      metricSelect.innerHTML = opts; chartMetric.innerHTML = opts;
+      document.getElementById('metric-date').value = toDateStr();
+      const lastW = getLastMetric('weight') || state.profile.weight;
+      const h = state.profile.height || 175;
+      const bmi = (lastW / Math.pow(h / 100, 2)).toFixed(1);
+      const label = bmiLabel(parseFloat(bmi));
+      document.getElementById('bmi-value').textContent = bmi;
+      document.getElementById('bmi-status').textContent = label.text;
+      const tag = document.getElementById('bmi-tag'); tag.textContent = label.text; tag.className = `bmi-tag ${label.class}`;
+      document.getElementById('bmr-value').textContent = calcBMR(lastW);
+      document.getElementById('tdee-value').textContent = calcTDEE(lastW);
+      const analysis = generatePlanAnalysis();
+      document.getElementById('intake-recommend').textContent = `建议每日摄入：${analysis.intake} kcal（基于 BMR ${analysis.bmr} + TDEE ${analysis.tdee}）`;
+      const phases = document.getElementById('phases-list');
+      if (state.goals.phases.length === 0) phases.innerHTML = '<div class="empty-state">暂无目标，请先完成设置向导</div>';
+      else phases.innerHTML = state.goals.phases.map(p => { const cur = getLastMetric('weight') || p.startWeight; const total = p.startWeight - p.targetWeight; const lost = p.startWeight - cur; const pct = total > 0 ? Math.max(0, Math.min(100, (lost / total) * 100)) : 0; const daysLeft = Math.ceil((new Date(p.deadline) - new Date()) / (1000 * 60 * 60 * 24)); return `<div class="phase-card"><h4>${p.name}</h4><p>${p.startWeight}kg → ${p.targetWeight}kg，截止 ${p.deadline}，剩余 ${daysLeft > 0 ? daysLeft + ' 天' : '已到期'}</p><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div><p>当前 ${cur.toFixed(1)}kg，已减 ${lost.toFixed(1)}kg</p></div>`; }).join('');
+      drawChart(chartMetric.value || 'weight');
     }
-    function bmiLabel(bmi) {
-      if (bmi >= 28) return { text: '肥胖', class: 'bmi-obese' };
-      if (bmi >= 24) return { text: '超重', class: 'bmi-overweight' };
-      return { text: '正常', class: 'bmi-normal' };
-    }
+
     function drawChart(metricKey) {
       const canvas = document.getElementById('trend-chart');
       const recs = state.metrics[metricKey]?.records || [];
@@ -479,191 +609,115 @@
       ctx.scale(dpr, dpr);
       const w = rect.width, h = rect.height;
       ctx.clearRect(0, 0, w, h);
-      if (recs.length < 2) {
-        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-light');
-        ctx.font = '14px sans-serif'; ctx.textAlign = 'center';
-        ctx.fillText(recs.length === 1 ? '再记录一个数据即可看到趋势' : '暂无数据', w / 2, h / 2);
-        return;
-      }
+      if (recs.length < 2) { ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-light'); ctx.font = '14px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(recs.length === 1 ? '再记录一个数据即可看到趋势' : '暂无数据', w / 2, h / 2); return; }
       const values = recs.map(r => r.value);
-      const minV = Math.min(...values) * 0.99;
-      const maxV = Math.max(...values) * 1.01;
+      const minV = Math.min(...values) * 0.99; const maxV = Math.max(...values) * 1.01;
       const pad = 32, graphW = w - pad * 2, graphH = h - pad * 2;
-      ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--border');
-      ctx.lineWidth = 1; ctx.beginPath();
+      ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue('--border'); ctx.lineWidth = 1; ctx.beginPath();
       ctx.moveTo(pad, pad); ctx.lineTo(pad, h - pad); ctx.lineTo(w - pad, h - pad); ctx.stroke();
-      ctx.strokeStyle = 'var(--primary)'; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      ctx.beginPath();
-      recs.forEach((r, i) => {
-        const x = pad + (i / (recs.length - 1)) * graphW;
-        const y = h - pad - ((r.value - minV) / (maxV - minV)) * graphH;
-        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      });
+      ctx.strokeStyle = 'var(--primary)'; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath();
+      recs.forEach((r, i) => { const x = pad + (i / (recs.length - 1)) * graphW; const y = h - pad - ((r.value - minV) / (maxV - minV)) * graphH; if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); });
       ctx.stroke();
       ctx.fillStyle = '#fff'; ctx.strokeStyle = 'var(--primary)'; ctx.lineWidth = 2;
-      recs.forEach((r, i) => {
-        const x = pad + (i / (recs.length - 1)) * graphW;
-        const y = h - pad - ((r.value - minV) / (maxV - minV)) * graphH;
-        ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-      });
+      recs.forEach((r, i) => { const x = pad + (i / (recs.length - 1)) * graphW; const y = h - pad - ((r.value - minV) / (maxV - minV)) * graphH; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); });
     }
-    function renderData() {
-      const metricSelect = document.getElementById('metric-select');
-      const chartMetric = document.getElementById('chart-metric');
-      const metricNames = { weight: '体重', waist: '腰围', bodyfat: '体脂率' };
-      const opts = Object.keys(state.metrics).map(k => `<option value="${k}">${metricNames[k] || k} (${state.metrics[k].unit})</option>`).join('');
-      metricSelect.innerHTML = opts; chartMetric.innerHTML = opts;
-      document.getElementById('metric-date').value = toDateStr();
-      const lastW = getLastMetric('weight') || 103;
-      const h = state.profile.height || 183;
-      const bmi = (lastW / Math.pow(h / 100, 2)).toFixed(1);
-      const label = bmiLabel(parseFloat(bmi));
-      document.getElementById('bmi-value').textContent = bmi;
-      document.getElementById('bmi-status').textContent = label.text;
-      const tag = document.getElementById('bmi-tag');
-      tag.textContent = label.text; tag.className = `bmi-tag ${label.class}`;
-      const phases = document.getElementById('phases-list');
-      if (state.goals.phases.length === 0) phases.innerHTML = '<div class="empty-state">暂无目标，点击右上角添加</div>';
-      else phases.innerHTML = state.goals.phases.map(p => {
-        const cur = getLastMetric('weight') || p.startWeight;
-        const total = p.startWeight - p.targetWeight;
-        const lost = p.startWeight - cur;
-        const pct = total > 0 ? Math.max(0, Math.min(100, (lost / total) * 100)) : 0;
-        const daysLeft = Math.ceil((new Date(p.deadline) - new Date()) / (1000 * 60 * 60 * 24));
-        return `<div class="phase-card"><h4>${p.name}</h4><p>${p.startWeight}kg → ${p.targetWeight}kg，截止 ${p.deadline}，剩余 ${daysLeft > 0 ? daysLeft + ' 天' : '已到期'}</p><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div><p>当前 ${cur.toFixed(1)}kg，已减 ${lost.toFixed(1)}kg</p></div>`;
+
+    function getTodayDiet(date = toDateStr()) { if (!state.diet.records[date]) state.diet.records[date] = { breakfast: [], lunch: [], dinner: [], snack: [] }; return state.diet.records[date]; }
+    function calcMealCal(items) { return items.reduce((sum, it) => { const f = findFood(it.foodId); return sum + (f ? Math.round(f.cal * it.qty) : 0); }, 0); }
+    function findFood(id) { return foodDB.find(f => f.id === id) || state.diet.customFoods.find(f => f.id === id); }
+    function renderDiet() {
+      const today = toDateStr();
+      const meals = getTodayDiet(today);
+      const total = ['breakfast', 'lunch', 'dinner', 'snack'].reduce((sum, k) => sum + calcMealCal(meals[k]), 0);
+      const target = recommendedIntake();
+      document.getElementById('diet-total').textContent = total;
+      document.getElementById('diet-target').textContent = target;
+      document.getElementById('diet-remain').textContent = target - total;
+      const mealNames = { breakfast: '早餐', lunch: '午餐', dinner: '晚餐', snack: '加餐' };
+      const container = document.getElementById('diet-records');
+      container.innerHTML = Object.entries(mealNames).map(([key, name]) => {
+        const items = meals[key];
+        const cal = calcMealCal(items);
+        return `<div class="meal-section"><div class="meal-header"><span class="meal-title">${name}</span><span class="meal-cal">${cal} kcal</span></div>${items.map((it, idx) => { const f = findFood(it.foodId); if (!f) return ''; return `<div class="food-entry"><span class="name">${f.name} x ${it.qty}${f.unit}</span><span class="cal">${Math.round(f.cal * it.qty)} kcal</span><button class="btn small danger" data-meal="${key}" data-idx="${idx}">删</button></div>`; }).join('')}<button class="btn small secondary" data-add-meal="${key}" style="width:100%;">+ 添加${name}</button></div>`;
       }).join('');
-      drawChart(chartMetric.value || 'weight');
+      container.querySelectorAll('[data-add-meal]').forEach(btn => btn.addEventListener('click', () => openFoodSelector(btn.dataset.addMeal)));
+      container.querySelectorAll('[data-meal]').forEach(btn => btn.addEventListener('click', () => { const meal = btn.dataset.meal; const idx = parseInt(btn.dataset.idx); state.diet.records[today][meal].splice(idx, 1); saveState(); }));
+      const guides = [
+        { title: '早餐', content: '1个鸡蛋 + 1份粗粮 + 1杯无糖豆浆/牛奶', tips: '避免油条、煎饼' },
+        { title: '午餐', content: '1拳主食 + 1掌蛋白质 + 2拳蔬菜', tips: '少油少炸' },
+        { title: '晚餐', content: '半拳主食 + 1掌白肉/豆腐 + 2拳蔬菜', tips: '晚餐后不再进食' },
+        { title: '加餐', content: '1个水果或10颗坚果', tips: '控制量' }
+      ];
+      document.getElementById('diet-guide').innerHTML = guides.map(d => `<div class="diet-card"><h4>${d.title}</h4><p>${d.content}</p><div class="tips">${d.tips}</div></div>`).join('');
+      document.getElementById('green-foods').innerHTML = ['鸡胸肉', '清蒸鱼', '白灼虾', '牛肉', '豆腐', '西兰花', '菠菜', '黄瓜', '番茄', '燕麦', '红薯', '玉米'].map(f => `<span class="food-item good">${f}</span>`).join('');
+      document.getElementById('red-foods').innerHTML = ['油条', '煎饼', '炸鸡', '糖醋里脊', '红烧肉', '奶茶', '含糖饮料', '炒饭炒面', '火锅底料菜', '薯片'].map(f => `<span class="food-item bad">${f}</span>`).join('');
+    }
+
+    function openFoodSelector(mealKey) {
+      document.getElementById('modal-title').textContent = `添加${{breakfast:'早餐',lunch:'午餐',dinner:'晚餐',snack:'加餐'}[mealKey]}`;
+      const cats = Object.entries(foodCategories).map(([k, v]) => `<button class="btn small secondary" data-cat="${k}" style="width:auto;">${v}</button>`).join('');
+      document.getElementById('modal-body').innerHTML = `<div style="margin-bottom:10px;"><input type="text" id="food-search" placeholder="搜索食物..." style="padding:10px;border:1px solid var(--border);border-radius:8px;width:100%;"></div><div class="chip-group" style="margin-bottom:10px;">${cats}</div><div id="food-list" style="max-height:300px;overflow-y:auto;"></div><button class="btn small secondary" id="add-custom-food" style="width:100%;margin-top:10px;">+ 自定义食物</button>`;
+      document.getElementById('modal-overlay').classList.add('show');
+      let currentCat = 'staple';
+      function renderFoodList(filter = '') {
+        const list = document.getElementById('food-list');
+        const foods = [...foodDB, ...state.diet.customFoods].filter(f => (currentCat === 'all' || f.category === currentCat) && f.name.includes(filter));
+        list.innerHTML = foods.map(f => `<div class="food-entry"><span class="name">${f.name}</span><span class="cal">${f.cal} kcal/${f.unit}</span><input type="number" id="qty-${f.id}" value="1" min="0.5" step="0.5"><button class="btn small" data-add="${f.id}">添加</button></div>`).join('');
+        list.querySelectorAll('[data-add]').forEach(btn => btn.addEventListener('click', () => { const qty = parseFloat(document.getElementById(`qty-${btn.dataset.add}`).value) || 1; const today = toDateStr(); if (!state.diet.records[today]) state.diet.records[today] = { breakfast: [], lunch: [], dinner: [], snack: [] }; state.diet.records[today][mealKey].push({ foodId: btn.dataset.add, qty }); saveState(); showNotify('已添加', findFood(btn.dataset.add).name); }));
+      }
+      renderFoodList();
+      document.getElementById('food-search').addEventListener('input', e => renderFoodList(e.target.value));
+      document.querySelectorAll('[data-cat]').forEach(btn => btn.addEventListener('click', () => { currentCat = btn.dataset.cat; document.querySelectorAll('[data-cat]').forEach(b => b.style.background = ''); btn.style.background = 'var(--primary-light)'; renderFoodList(document.getElementById('food-search').value); }));
+      document.getElementById('add-custom-food').addEventListener('click', () => openCustomFoodModal(mealKey));
+    }
+
+    function openCustomFoodModal(mealKey) {
+      document.getElementById('modal-title').textContent = '自定义食物';
+      document.getElementById('modal-body').innerHTML = `
+        <div class="input-group"><label>食物名称</label><input type="text" id="cf-name"></div>
+        <div class="input-row"><div class="input-group"><label>单位</label><input type="text" id="cf-unit" placeholder="碗/g/个"></div><div class="input-group"><label>热量（kcal）</label><input type="number" id="cf-cal" step="1"></div></div>
+        <div class="input-row"><div class="input-group"><label>蛋白质（g）</label><input type="number" id="cf-pro" step="0.1"></div><div class="input-group"><label>碳水（g）</label><input type="number" id="cf-carb" step="0.1"></div></div>
+        <div class="input-group"><label>脂肪（g）</label><input type="number" id="cf-fat" step="0.1"></div>
+        <div class="input-group"><label>分类</label><select id="cf-cat">${Object.entries(foodCategories).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select></div>
+        <button class="btn" id="save-cf-btn">保存</button>`;
+      document.getElementById('save-cf-btn').addEventListener('click', () => {
+        const f = { id: uid(), name: document.getElementById('cf-name').value, unit: document.getElementById('cf-unit').value || '份', cal: parseFloat(document.getElementById('cf-cal').value) || 0, pro: parseFloat(document.getElementById('cf-pro').value) || 0, carb: parseFloat(document.getElementById('cf-carb').value) || 0, fat: parseFloat(document.getElementById('cf-fat').value) || 0, category: document.getElementById('cf-cat').value };
+        if (!f.name) { showNotify('请输入名称', ''); return; }
+        state.diet.customFoods.push(f);
+        const today = toDateStr(); if (!state.diet.records[today]) state.diet.records[today] = { breakfast: [], lunch: [], dinner: [], snack: [] };
+        state.diet.records[today][mealKey].push({ foodId: f.id, qty: 1 });
+        saveState(); closeModal(); showNotify('已添加自定义食物', f.name);
+      });
     }
 
     function renderScheduleEditor() {
       const events = [...state.schedule.events].sort((a, b) => timeToMin(a.time) - timeToMin(b.time));
       const container = document.getElementById('schedule-editor-list');
-      container.innerHTML = events.map(e => `
-        <div class="schedule-item type-${e.type}">
-          <div class="time">${e.time}</div>
-          <div class="body"><div class="name">${e.name}</div><div class="desc">${e.desc || ''} · ${e.duration || 0}分钟 · ${e.remind ? '提醒开' : '提醒关'}</div></div>
-          <div class="actions"><button class="btn small secondary" data-edit="${e.id}">编辑</button><button class="btn small danger" data-del="${e.id}">删除</button></div>
-        </div>`).join('');
+      container.innerHTML = events.map(e => `<div class="schedule-item type-${e.type}"><div class="time">${e.time}</div><div class="body"><div class="name">${e.name}</div><div class="desc">${e.desc || ''} · ${e.duration || 0}分钟 · ${e.remind ? '提醒开' : '提醒关'}</div></div><div class="actions"><button class="btn small secondary" data-edit="${e.id}">编辑</button><button class="btn small danger" data-del="${e.id}">删除</button></div></div>`).join('');
       container.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => openEventModal(btn.dataset.edit)));
-      container.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', () => {
-        if (confirm('确定删除该事件？')) { state.schedule.events = state.schedule.events.filter(e => e.id !== btn.dataset.del); saveState(); }
-      }));
+      container.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', () => { if (confirm('确定删除该事件？')) { state.schedule.events = state.schedule.events.filter(e => e.id !== btn.dataset.del); saveState(); } }));
       const tplContainer = document.getElementById('schedule-templates');
-      tplContainer.innerHTML = state.schedule.templates.map(t => `
-        <div class="template-card"><div><h4>${t.name}</h4><p>${t.events.length} 个事件</p></div>
-          <div><button class="btn small" data-apply-schedule="${t.id}">应用</button><button class="btn small danger" data-del-schedule="${t.id}">删</button></div>
-        </div>`).join('');
-      tplContainer.querySelectorAll('[data-apply-schedule]').forEach(btn => btn.addEventListener('click', () => {
-        const tpl = state.schedule.templates.find(t => t.id === btn.dataset.applySchedule);
-        if (!tpl) return;
-        if (confirm(`应用模板「${tpl.name}」将替换当前日程，确定吗？`)) { state.schedule.events = JSON.parse(JSON.stringify(tpl.events)); saveState(); }
-      }));
-      tplContainer.querySelectorAll('[data-del-schedule]').forEach(btn => btn.addEventListener('click', () => {
-        state.schedule.templates = state.schedule.templates.filter(t => t.id !== btn.dataset.delSchedule);
-        saveState();
-      }));
+      tplContainer.innerHTML = state.schedule.templates.map(t => `<div class="template-card"><div><h4>${t.name}</h4><p>${t.events.length} 个事件</p></div><div><button class="btn small" data-apply-schedule="${t.id}">应用</button><button class="btn small danger" data-del-schedule="${t.id}">删</button></div></div>`).join('');
+      tplContainer.querySelectorAll('[data-apply-schedule]').forEach(btn => btn.addEventListener('click', () => { const tpl = state.schedule.templates.find(t => t.id === btn.dataset.applySchedule); if (!tpl) return; if (confirm(`应用模板「${tpl.name}」将替换当前日程，确定吗？`)) { state.schedule.events = JSON.parse(JSON.stringify(tpl.events)); saveState(); } }));
+      tplContainer.querySelectorAll('[data-del-schedule]').forEach(btn => btn.addEventListener('click', () => { state.schedule.templates = state.schedule.templates.filter(t => t.id !== btn.dataset.delSchedule); saveState(); }));
     }
+    function openEventModal(id = null) { const isNew = !id; const evt = isNew ? { id: uid(), name: '', time: '12:00', duration: 30, desc: '', type: 'routine', remind: true, remindBefore: 0 } : state.schedule.events.find(e => e.id === id); document.getElementById('modal-title').textContent = isNew ? '添加事件' : '编辑事件'; document.getElementById('modal-body').innerHTML = `<div class="input-group"><label>名称</label><input type="text" id="evt-name" value="${evt.name}"></div><div class="input-row"><div class="input-group"><label>开始时间</label><input type="time" id="evt-time" value="${evt.time}"></div><div class="input-group"><label>时长（分钟）</label><input type="number" id="evt-duration" value="${evt.duration}"></div></div><div class="input-row"><div class="input-group"><label>类型</label><select id="evt-type"><option value="routine" ${evt.type==='routine'?'selected':''}>日常</option><option value="exercise" ${evt.type==='exercise'?'selected':''}>运动</option><option value="meal" ${evt.type==='meal'?'selected':''}>饮食</option><option value="sleep" ${evt.type==='sleep'?'selected':''}>睡眠</option><option value="transition" ${evt.type==='transition'?'selected':''}>过渡</option></select></div><div class="input-group"><label>提前提醒（分钟）</label><input type="number" id="evt-before" value="${evt.remindBefore}"></div></div><div class="input-group"><label>描述</label><input type="text" id="evt-desc" value="${evt.desc}"></div><div class="toggle-row" style="margin-bottom:14px;"><span>启用提醒</span><div class="toggle-switch ${evt.remind ? 'on' : ''}" id="evt-remind"></div></div><button class="btn" id="save-evt-btn">保存</button>`; document.getElementById('modal-overlay').classList.add('show'); document.getElementById('evt-remind').addEventListener('click', function() { this.classList.toggle('on'); }); document.getElementById('save-evt-btn').addEventListener('click', () => { evt.name = document.getElementById('evt-name').value || evt.name || '未命名'; evt.time = document.getElementById('evt-time').value; evt.duration = parseInt(document.getElementById('evt-duration').value) || 0; evt.type = document.getElementById('evt-type').value; evt.remindBefore = parseInt(document.getElementById('evt-before').value) || 0; evt.desc = document.getElementById('evt-desc').value; evt.remind = document.getElementById('evt-remind').classList.contains('on'); if (isNew) state.schedule.events.push(evt); else state.schedule.events = state.schedule.events.map(e => e.id === evt.id ? evt : e); closeModal(); saveState(); }); }
 
-    function openEventModal(id = null) {
-      const isNew = !id;
-      const evt = isNew ? { id: uid(), name: '', time: '12:00', duration: 30, desc: '', type: 'routine', remind: true, remindBefore: 0 } : state.schedule.events.find(e => e.id === id);
-      document.getElementById('modal-title').textContent = isNew ? '添加事件' : '编辑事件';
-      document.getElementById('modal-body').innerHTML = `
-        <div class="input-group"><label>名称</label><input type="text" id="evt-name" value="${evt.name}"></div>
-        <div class="input-row"><div class="input-group"><label>开始时间</label><input type="time" id="evt-time" value="${evt.time}"></div><div class="input-group"><label>时长（分钟）</label><input type="number" id="evt-duration" value="${evt.duration}"></div></div>
-        <div class="input-row"><div class="input-group"><label>类型</label><select id="evt-type"><option value="routine" ${evt.type === 'routine' ? 'selected' : ''}>日常</option><option value="exercise" ${evt.type === 'exercise' ? 'selected' : ''}>运动</option><option value="meal" ${evt.type === 'meal' ? 'selected' : ''}>饮食</option><option value="sleep" ${evt.type === 'sleep' ? 'selected' : ''}>睡眠</option><option value="transition" ${evt.type === 'transition' ? 'selected' : ''}>过渡</option></select></div><div class="input-group"><label>提前提醒（分钟）</label><input type="number" id="evt-before" value="${evt.remindBefore}"></div></div>
-        <div class="input-group"><label>描述</label><input type="text" id="evt-desc" value="${evt.desc}"></div>
-        <div class="toggle-row" style="margin-bottom:14px;"><span>启用提醒</span><div class="toggle-switch ${evt.remind ? 'on' : ''}" id="evt-remind"></div></div>
-        <button class="btn" id="save-evt-btn">保存</button>`;
-      document.getElementById('modal-overlay').classList.add('show');
-      document.getElementById('evt-remind').addEventListener('click', function() { this.classList.toggle('on'); });
-      document.getElementById('save-evt-btn').addEventListener('click', () => {
-        evt.name = document.getElementById('evt-name').value || evt.name || '未命名';
-        evt.time = document.getElementById('evt-time').value;
-        evt.duration = parseInt(document.getElementById('evt-duration').value) || 0;
-        evt.type = document.getElementById('evt-type').value;
-        evt.remindBefore = parseInt(document.getElementById('evt-before').value) || 0;
-        evt.desc = document.getElementById('evt-desc').value;
-        evt.remind = document.getElementById('evt-remind').classList.contains('on');
-        if (isNew) state.schedule.events.push(evt);
-        else state.schedule.events = state.schedule.events.map(e => e.id === evt.id ? evt : e);
-        closeModal(); saveState();
-      });
-    }
-
-    const typeIcons = { rest: '😴', swim: '🏊', bike: '🚴', run: '🏃', hike: '🥾', box: '🥊', strength: '💪', yoga: '🧘', other: '⭕' };
-    const typeLabels = { rest: '休息', swim: '游泳', bike: '骑车', run: '跑步', hike: '徒步', box: '拳击', strength: '力量', yoga: '瑜伽', other: '其他' };
-    const dayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-    function currentPlan() { return state.training.plans.find(p => p.name === state.training.currentPlan) || state.training.plans[0]; }
     function renderTraining() {
       const planSelect = document.getElementById('training-plan-select');
       planSelect.innerHTML = state.training.plans.map(p => `<option value="${p.name}" ${p.name === state.training.currentPlan ? 'selected' : ''}>${p.name}</option>`).join('');
       const plan = currentPlan();
       const grid = document.getElementById('training-grid');
-      grid.innerHTML = dayNames.map((dn, i) => {
-        const d = plan.days[i] || { type: 'rest', activity: '休息' };
-        return `<div class="week-day" data-day="${i}"><div class="dow">${dn}</div><div class="icon">${typeIcons[d.type] || typeIcons.other}</div><div class="type">${typeLabels[d.type] || d.type}</div></div>`;
-      }).join('');
+      grid.innerHTML = dayNames.map((dn, i) => { const d = plan.days[i] || { type: 'rest', activity: '休息' }; return `<div class="week-day" data-day="${i}"><div class="dow">${dn}</div><div class="icon">${typeIcons[d.type] || typeIcons.other}</div><div class="type">${typeLabels[d.type] || d.type}</div></div>`; }).join('');
       grid.querySelectorAll('.week-day').forEach(el => el.addEventListener('click', () => openDayModal(parseInt(el.dataset.day))));
       const detail = document.getElementById('training-detail');
-      detail.innerHTML = dayNames.map((dn, i) => {
-        const d = plan.days[i] || { type: 'rest', activity: '休息' };
-        return `<div class="diet-card"><h4>${dn}：${d.activity}</h4><p>${typeLabels[d.type] || d.type} · ${d.duration || 0}分钟${d.distance ? ' · ' + d.distance + '米' : ''}${d.note ? ' · ' + d.note : ''}</p></div>`;
-      }).join('');
+      detail.innerHTML = dayNames.map((dn, i) => { const d = plan.days[i] || { type: 'rest', activity: '休息' }; return `<div class="diet-card"><h4>${dn}：${d.activity}</h4><p>${typeLabels[d.type] || d.type} · ${d.duration || 0}分钟${d.distance ? ' · ' + d.distance + '米' : ''}${d.note ? ' · ' + d.note : ''}</p></div>`; }).join('');
       const tplContainer = document.getElementById('training-templates');
-      tplContainer.innerHTML = state.training.templates.map(t => `
-        <div class="template-card"><div><h4>${t.name}</h4><p>7天训练模板</p></div>
-          <div><button class="btn small" data-apply-training="${t.id}">应用</button><button class="btn small danger" data-del-training="${t.id}">删</button></div>
-        </div>`).join('');
-      tplContainer.querySelectorAll('[data-apply-training]').forEach(btn => btn.addEventListener('click', () => {
-        const tpl = state.training.templates.find(t => t.id === btn.dataset.applyTraining);
-        if (!tpl) return;
-        if (confirm(`应用模板「${tpl.name}」将替换当前训练计划，确定吗？`)) {
-          const cp = currentPlan();
-          cp.days = JSON.parse(JSON.stringify(tpl.days));
-          saveState();
-        }
-      }));
-      tplContainer.querySelectorAll('[data-del-training]').forEach(btn => btn.addEventListener('click', () => {
-        state.training.templates = state.training.templates.filter(t => t.id !== btn.dataset.delTraining);
-        saveState();
-      }));
+      tplContainer.innerHTML = state.training.templates.map(t => `<div class="template-card"><div><h4>${t.name}</h4><p>7天训练模板</p></div><div><button class="btn small" data-apply-training="${t.id}">应用</button><button class="btn small danger" data-del-training="${t.id}">删</button></div></div>`).join('');
+      tplContainer.querySelectorAll('[data-apply-training]').forEach(btn => btn.addEventListener('click', () => { const tpl = state.training.templates.find(t => t.id === btn.dataset.applyTraining); if (!tpl) return; if (confirm(`应用模板「${tpl.name}」将替换当前训练计划，确定吗？`)) { const cp = currentPlan(); cp.days = JSON.parse(JSON.stringify(tpl.days)); saveState(); } }));
+      tplContainer.querySelectorAll('[data-del-training]').forEach(btn => btn.addEventListener('click', () => { state.training.templates = state.training.templates.filter(t => t.id !== btn.dataset.delTraining); saveState(); }));
     }
-    function openDayModal(dayIndex) {
-      const plan = currentPlan();
-      const d = plan.days[dayIndex] || { type: 'rest', activity: '休息', duration: 0, distance: 0, note: '' };
-      document.getElementById('modal-title').textContent = `编辑 ${dayNames[dayIndex]} 训练`;
-      document.getElementById('modal-body').innerHTML = `
-        <div class="input-row"><div class="input-group"><label>类型</label><select id="day-type">${Object.entries(typeLabels).map(([k, v]) => `<option value="${k}" ${d.type === k ? 'selected' : ''}>${v}</option>`).join('')}</select></div><div class="input-group"><label>活动名称</label><input type="text" id="day-activity" value="${d.activity}"></div></div>
-        <div class="input-row"><div class="input-group"><label>时长（分钟）</label><input type="number" id="day-duration" value="${d.duration}"></div><div class="input-group"><label>距离/量（可选）</label><input type="number" id="day-distance" value="${d.distance}"></div></div>
-        <div class="input-group"><label>备注</label><input type="text" id="day-note" value="${d.note}"></div>
-        <button class="btn" id="save-day-btn">保存</button>`;
-      document.getElementById('modal-overlay').classList.add('show');
-      document.getElementById('save-day-btn').addEventListener('click', () => {
-        plan.days[dayIndex] = {
-          type: document.getElementById('day-type').value,
-          activity: document.getElementById('day-activity').value || '活动',
-          duration: parseInt(document.getElementById('day-duration').value) || 0,
-          distance: parseInt(document.getElementById('day-distance').value) || 0,
-          note: document.getElementById('day-note').value
-        };
-        closeModal(); saveState();
-      });
-    }
-
-    function renderDiet() {
-      const dietGuide = [
-        { title: '早餐 07:30', content: '1个鸡蛋 + 1份粗粮（玉米/红薯/全麦面包） + 1杯无糖豆浆/牛奶 + 少量蔬菜', tips: '避免油条、煎饼、甜豆浆' },
-        { title: '午餐 12:00', content: '1拳米饭/面条 + 1掌瘦肉/鱼/虾 + 2拳绿叶蔬菜', tips: '少油少炸，避免糖醋、红烧类' },
-        { title: '下午加餐 15:30', content: '1个苹果/1小盒无糖酸奶/10颗杏仁', tips: '控制量，防止晚上暴食' },
-        { title: '晚餐 19:30', content: '半拳主食（可选） + 1掌白肉/豆腐 + 2拳蔬菜', tips: '晚餐后不再进食' }
-      ];
-      document.getElementById('diet-guide').innerHTML = dietGuide.map(d => `<div class="diet-card"><h4>${d.title}</h4><p>${d.content}</p><div class="tips">${d.tips}</div></div>`).join('');
-      document.getElementById('green-foods').innerHTML = ['鸡胸肉', '清蒸鱼', '白灼虾', '牛肉', '豆腐', '西兰花', '菠菜', '黄瓜', '番茄', '燕麦', '红薯', '玉米'].map(f => `<span class="food-item good">${f}</span>`).join('');
-      document.getElementById('red-foods').innerHTML = ['油条', '煎饼', '炸鸡', '糖醋里脊', '红烧肉', '奶茶', '含糖饮料', '炒饭炒面', '火锅底料菜', '薯片零食'].map(f => `<span class="food-item bad">${f}</span>`).join('');
-    }
-
-    function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
+    function openDayModal(dayIndex) { const plan = currentPlan(); const d = plan.days[dayIndex] || { type: 'rest', activity: '休息', duration: 0, distance: 0, note: '' }; document.getElementById('modal-title').textContent = `编辑 ${dayNames[dayIndex]} 训练`; document.getElementById('modal-body').innerHTML = `<div class="input-row"><div class="input-group"><label>类型</label><select id="day-type">${Object.entries(typeLabels).map(([k, v]) => `<option value="${k}" ${d.type === k ? 'selected' : ''}>${v}</option>`).join('')}</select></div><div class="input-group"><label>活动名称</label><input type="text" id="day-activity" value="${d.activity}"></div></div><div class="input-row"><div class="input-group"><label>时长（分钟）</label><input type="number" id="day-duration" value="${d.duration}"></div><div class="input-group"><label>距离/量（可选）</label><input type="number" id="day-distance" value="${d.distance}"></div></div><div class="input-group"><label>备注</label><input type="text" id="day-note" value="${d.note}"></div><button class="btn" id="save-day-btn">保存</button>`; document.getElementById('modal-overlay').classList.add('show'); document.getElementById('save-day-btn').addEventListener('click', () => { plan.days[dayIndex] = { type: document.getElementById('day-type').value, activity: document.getElementById('day-activity').value || '活动', duration: parseInt(document.getElementById('day-duration').value) || 0, distance: parseInt(document.getElementById('day-distance').value) || 0, note: document.getElementById('day-note').value }; closeModal(); saveState(); }); }
 
     function renderSettings() {
       document.getElementById('setting-height').value = state.profile.height;
@@ -675,14 +729,78 @@
       toggleClass(document.getElementById('encrypt-toggle'), 'on', state.settings.encryptionEnabled);
       const encryptPanel = document.getElementById('encrypt-panel');
       if (state.settings.encryptionEnabled) encryptPanel.classList.remove('hidden'); else encryptPanel.classList.add('hidden');
+      const ws = document.getElementById('wizard-summary');
+      const analysis = generatePlanAnalysis();
+      ws.innerHTML = `<div class="info-box"><strong>当前方案</strong><br>当前体重：${state.profile.weight}kg<br>目标体重：${state.profile.targetWeight}kg<br>计划周期：${state.profile.targetWeeks}周<br>每周建议减重：${analysis.weeklyLoss.toFixed(2)}kg（安全上限约${(state.profile.weight * 0.01).toFixed(2)}kg）<br>建议日摄入：${analysis.intake} kcal<br>运动偏好：${state.profile.sports.map(s => typeLabels[s]).join('、')}<br>训练时间：${state.profile.workoutTime}</div>${analysis.risk ? '<div class="warning-box">⚠️ 你的目标减重速度偏快，可能难以坚持或导致肌肉流失。建议延长周期或调整为更安全的周减重速度。</div>' : ''}`;
     }
 
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('tab-' + tabName).classList.add('active');
-      document.querySelector(`.nav-btn[data-tab="${tabName}"]`).classList.add('active');
-      if (tabName === 'data') setTimeout(() => drawChart(document.getElementById('chart-metric').value || 'weight'), 50);
+    function switchTab(tabName) { document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); document.getElementById('tab-' + tabName).classList.add('active'); document.querySelector(`.nav-btn[data-tab="${tabName}"]`).classList.add('active'); if (tabName === 'data') setTimeout(() => drawChart(document.getElementById('chart-metric').value || 'weight'), 50); }
+
+    function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+    // ========== Onboarding 向导 ==========
+    const wizardSteps = [
+      { title: '基础信息', subtitle: '用于计算代谢和目标' },
+      { title: '身体数据', subtitle: '当前体重与目标' },
+      { title: '女性指标', subtitle: '可选，用于体型追踪' },
+      { title: '作息安排', subtitle: '生成你的每日时间表' },
+      { title: '运动偏好', subtitle: '生成训练计划' },
+      { title: '方案确认', subtitle: '查看计算结果' }
+    ];
+    function renderWizardStep() {
+      const ob = document.getElementById('onboarding');
+      if (!ob.classList.contains('show')) return;
+      document.getElementById('ob-title').textContent = wizardSteps[wizardStep].title;
+      document.getElementById('ob-subtitle').textContent = wizardSteps[wizardStep].subtitle;
+      document.getElementById('ob-prev').style.visibility = wizardStep === 0 ? 'hidden' : 'visible';
+      document.getElementById('ob-next').textContent = wizardStep === wizardSteps.length - 1 ? '完成' : '下一步';
+      const dots = wizardSteps.map((s, i) => `<div class="step-dot ${i === wizardStep ? 'active' : ''}"></div>`).join('');
+      const p = state.profile;
+      let body = '';
+      if (wizardStep === 0) {
+        body = `<div class="step-indicator">${dots}</div><div class="input-group"><label>称呼（可选）</label><input type="text" id="w-name" value="${p.name}" placeholder="例如：小明"></div><div class="input-row"><div class="input-group"><label>性别</label><select id="w-gender"><option value="male" ${p.gender==='male'?'selected':''}>男</option><option value="female" ${p.gender==='female'?'selected':''}>女</option></select></div><div class="input-group"><label>出生年份</label><input type="number" id="w-birth" value="${p.birthYear}" min="1900" max="2100"></div></div><div class="input-row"><div class="input-group"><label>身高（cm）</label><input type="number" id="w-height" value="${p.height}" step="0.1"></div><div class="input-group"><label>年龄</label><input type="number" value="${calcAge()}" disabled style="background:var(--bg);"></div></div>`;
+      } else if (wizardStep === 1) {
+        body = `<div class="step-indicator">${dots}</div><div class="input-row"><div class="input-group"><label>当前体重（kg）</label><input type="number" id="w-weight" value="${p.weight}" step="0.1"></div><div class="input-group"><label>目标体重（kg）</label><input type="number" id="w-target" value="${p.targetWeight}" step="0.1"></div></div><div class="input-group"><label>计划周期（周）</label><input type="number" id="w-weeks" value="${p.targetWeeks}" min="2" max="104"></div><div class="info-box" id="w-analysis">填写后计算建议</div>`;
+      } else if (wizardStep === 2) {
+        if (p.gender !== 'female') { wizardStep++; renderWizardStep(); return; }
+        body = `<div class="step-indicator">${dots}</div><p style="color:var(--text-light);font-size:13px;margin-bottom:12px;">以下为可选项，用于更精确追踪体型变化</p><div class="input-row three"><div class="input-group"><label>胸围（cm）</label><input type="number" id="w-bust" value="${p.measurements.bust || ''}" step="0.1" placeholder="可选"></div><div class="input-group"><label>腰围（cm）</label><input type="number" id="w-waist" value="${p.measurements.waist || ''}" step="0.1" placeholder="可选"></div><div class="input-group"><label>臀围（cm）</label><input type="number" id="w-hip" value="${p.measurements.hip || ''}" step="0.1" placeholder="可选"></div></div><button class="btn secondary" id="w-skip-female" style="width:100%;">跳过此步</button>`;
+      } else if (wizardStep === 3) {
+        body = `<div class="step-indicator">${dots}</div><div class="input-row"><div class="input-group"><label>起床时间</label><input type="time" id="w-wake" value="${p.wakeTime}"></div><div class="input-group"><label>入睡时间</label><input type="time" id="w-sleep" value="${p.sleepTime}"></div></div><div class="input-group"><label>每天可用于运动的时长（分钟）</label><input type="number" id="w-duration" value="50" min="10" max="180"></div>`;
+      } else if (wizardStep === 4) {
+        body = `<div class="step-indicator">${dots}</div><p style="color:var(--text-light);font-size:13px;margin-bottom:12px;">选择你日常会进行的运动（可多选）</p><div class="chip-group" id="w-sports">${Object.entries(typeLabels).filter(([k]) => k !== 'rest').map(([k, v]) => `<div class="chip ${p.sports.includes(k) ? 'selected' : ''}" data-sport="${k}">${typeIcons[k]} ${v}</div>`).join('')}</div><div class="input-group" style="margin-top:16px;"><label>每周运动天数</label><select id="w-days">${[1,2,3,4,5,6,7].map(n => `<option value="${n}" ${p.workoutDays===n?'selected':''}>${n}天</option>`).join('')}</select></div><div class="input-group"><label>通常运动时间</label><input type="time" id="w-time" value="${p.workoutTime}"></div>`;
+      } else if (wizardStep === 5) {
+        const a = generatePlanAnalysis();
+        body = `<div class="step-indicator">${dots}</div><div class="info-box"><strong>你的专属方案</strong><br>BMI：${a.bmi}<br>基础代谢：${a.bmr} kcal/天<br>每日总消耗：${a.tdee} kcal/天<br>建议日摄入：${a.intake} kcal/天<br>计划总减重：${a.totalLoss.toFixed(1)}kg<br>你的目标速度：${a.weeklyLoss.toFixed(2)}kg/周<br>安全速度上限：约${(p.weight * 0.01).toFixed(2)}kg/周</div>${a.risk ? '<div class="warning-box">⚠️ 你的目标偏激进。系统仍会按你的要求生成计划，但建议延长周期或放慢速度，以免肌肉流失、代谢下降。</div>' : '<div class="info-box">✅ 你的目标在合理范围内</div>'}<p style="color:var(--text-light);font-size:13px;margin-top:12px;">完成后，系统会自动生成日程、训练计划和阶段目标。</p>`;
+      }
+      document.getElementById('ob-body').innerHTML = body;
+      if (wizardStep === 1) { document.getElementById('w-weight')?.addEventListener('input', updateWizardAnalysis); document.getElementById('w-target')?.addEventListener('input', updateWizardAnalysis); document.getElementById('w-weeks')?.addEventListener('input', updateWizardAnalysis); updateWizardAnalysis(); }
+      if (wizardStep === 2) { document.getElementById('w-skip-female')?.addEventListener('click', () => { wizardStep++; renderWizardStep(); }); }
+      if (wizardStep === 4) { document.querySelectorAll('#w-sports .chip').forEach(c => c.addEventListener('click', () => { c.classList.toggle('selected'); })); }
+    }
+    function updateWizardAnalysis() { const cw = parseFloat(document.getElementById('w-weight').value) || 80; const tw = parseFloat(document.getElementById('w-target').value) || 70; const wk = parseInt(document.getElementById('w-weeks').value) || 12; const swl = Math.min(0.01 * cw, Math.max(0.1, (cw - tw) / wk)); const safe = cw * 0.01; document.getElementById('w-analysis').innerHTML = `<strong>分析：</strong><br>总减重 ${(cw-tw).toFixed(1)}kg，计划 ${wk} 周<br>目标速度 ${((cw-tw)/wk).toFixed(2)}kg/周，安全速度 ≤ ${safe.toFixed(2)}kg/周<br>${((cw-tw)/wk) > safe * 1.2 ? '偏快，建议延长周期' : '速度合理'}`; }
+    function saveWizardInputs() {
+      const p = state.profile;
+      if (wizardStep === 0) { p.name = document.getElementById('w-name').value; p.gender = document.getElementById('w-gender').value; p.birthYear = parseInt(document.getElementById('w-birth').value) || p.birthYear; p.height = parseFloat(document.getElementById('w-height').value) || p.height; }
+      else if (wizardStep === 1) { p.weight = parseFloat(document.getElementById('w-weight').value) || p.weight; p.targetWeight = parseFloat(document.getElementById('w-target').value) || p.targetWeight; p.targetWeeks = parseInt(document.getElementById('w-weeks').value) || p.targetWeeks; }
+      else if (wizardStep === 2) { p.measurements.bust = parseFloat(document.getElementById('w-bust').value) || 0; p.measurements.waist = parseFloat(document.getElementById('w-waist').value) || 0; p.measurements.hip = parseFloat(document.getElementById('w-hip').value) || 0; }
+      else if (wizardStep === 3) { p.wakeTime = document.getElementById('w-wake').value; p.sleepTime = document.getElementById('w-sleep').value; }
+      else if (wizardStep === 4) { p.sports = Array.from(document.querySelectorAll('#w-sports .chip.selected')).map(c => c.dataset.sport); if (p.sports.length === 0) p.sports = ['swim']; p.workoutDays = parseInt(document.getElementById('w-days').value) || 4; p.workoutTime = document.getElementById('w-time').value; }
+    }
+    function completeWizard() {
+      const gen = generatePhases();
+      state.goals.phases = gen.phases;
+      const tp = generateTrainingPlan();
+      state.training.plans = [tp];
+      state.training.currentPlan = tp.name;
+      state.schedule.events = generateSchedule();
+      state.metrics.weight.records.push({ date: toDateStr(), value: state.profile.weight, note: '初始体重' });
+      if (state.profile.measurements.waist) state.metrics.waist.records.push({ date: toDateStr(), value: state.profile.measurements.waist, note: '初始腰围' });
+      if (state.profile.measurements.bust) state.metrics.bust.records.push({ date: toDateStr(), value: state.profile.measurements.bust, note: '初始胸围' });
+      if (state.profile.measurements.hip) state.metrics.hip.records.push({ date: toDateStr(), value: state.profile.measurements.hip, note: '初始臀围' });
+      state.meta.onboardingComplete = true;
+      document.getElementById('onboarding').classList.remove('show');
+      saveState();
+      showNotify('方案已生成', '祝你减肥成功！');
     }
 
     function bindEvents() {
@@ -690,195 +808,84 @@
       document.getElementById('modal-close').addEventListener('click', closeModal);
       document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target.id === 'modal-overlay') closeModal(); });
 
-      // today timer
-      let ti;
-      const updateTimer = () => {
-        const h = String(Math.floor(timerSeconds / 3600)).padStart(2, '0');
-        const m = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2, '0');
-        const s = String(timerSeconds % 60).padStart(2, '0');
-        document.getElementById('swim-timer').textContent = `${h}:${m}:${s}`;
-      };
-      document.getElementById('timer-start').addEventListener('click', () => {
-        if (!timerRunning) { timerRunning = true; ti = setInterval(() => { timerSeconds++; updateTimer(); }, 1000); }
-      });
-      document.getElementById('timer-pause').addEventListener('click', () => { timerRunning = false; clearInterval(ti); });
-      document.getElementById('timer-reset').addEventListener('click', () => { timerRunning = false; clearInterval(ti); timerSeconds = 0; updateTimer(); });
+      // Onboarding
+      document.getElementById('ob-next').addEventListener('click', () => { saveWizardInputs(); if (wizardStep < wizardSteps.length - 1) { wizardStep++; renderWizardStep(); } else { completeWizard(); } });
+      document.getElementById('ob-prev').addEventListener('click', () => { saveWizardInputs(); if (wizardStep > 0) { wizardStep--; renderWizardStep(); } });
 
-      // data
+      // Timer
+      const updateTimer = () => { const h = String(Math.floor(timerSeconds / 3600)).padStart(2, '0'); const m = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2, '0'); const s = String(timerSeconds % 60).padStart(2, '0'); document.getElementById('swim-timer').textContent = `${h}:${m}:${s}`; };
+      document.getElementById('timer-start').addEventListener('click', () => { if (!timerRunning) { timerRunning = true; timerInterval = setInterval(() => { timerSeconds++; updateTimer(); }, 1000); } });
+      document.getElementById('timer-pause').addEventListener('click', () => { timerRunning = false; clearInterval(timerInterval); });
+      document.getElementById('timer-reset').addEventListener('click', () => { timerRunning = false; clearInterval(timerInterval); timerSeconds = 0; updateTimer(); });
+
+      // Data
       document.getElementById('record-metric').addEventListener('click', () => {
-        const key = document.getElementById('metric-select').value;
-        const val = parseFloat(document.getElementById('metric-value').value);
-        const date = document.getElementById('metric-date').value || toDateStr();
-        const note = document.getElementById('metric-note').value;
+        const key = document.getElementById('metric-select').value; const val = parseFloat(document.getElementById('metric-value').value); const date = document.getElementById('metric-date').value || toDateStr(); const note = document.getElementById('metric-note').value;
         if (isNaN(val)) { showNotify('输入错误', '请输入有效数值'); return; }
         if (!state.metrics[key]) state.metrics[key] = { unit: '', records: [] };
         state.metrics[key].records.push({ date, value: val, note });
         state.metrics[key].records.sort((a, b) => new Date(a.date) - new Date(b.date));
-        document.getElementById('metric-value').value = '';
-        document.getElementById('metric-note').value = '';
+        document.getElementById('metric-value').value = ''; document.getElementById('metric-note').value = '';
         saveState(); showNotify('记录成功', `${key === 'weight' ? '体重' : key} ${val}`);
       });
-      document.getElementById('add-phase-btn').addEventListener('click', () => {
-        const name = prompt('阶段名称'); if (!name) return;
-        const sw = parseFloat(prompt('起始体重')) || getLastMetric('weight') || 103;
-        const tw = parseFloat(prompt('目标体重')) || 80;
-        const dl = prompt('截止日期 (YYYY-MM-DD)', '2026-12-31');
-        state.goals.phases.push({ id: uid(), name, startWeight: sw, targetWeight: tw, deadline: dl });
-        saveState();
-      });
+      document.getElementById('add-phase-btn').addEventListener('click', () => { const name = prompt('阶段名称'); if (!name) return; const sw = parseFloat(prompt('起始体重')) || getLastMetric('weight') || state.profile.weight; const tw = parseFloat(prompt('目标体重')) || state.profile.targetWeight; const dl = prompt('截止日期 (YYYY-MM-DD)', '2026-12-31'); state.goals.phases.push({ id: uid(), name, startWeight: sw, targetWeight: tw, deadline: dl }); saveState(); });
       document.getElementById('chart-metric').addEventListener('change', e => drawChart(e.target.value));
 
-      // schedule
+      // Diet
+      document.getElementById('add-food-btn').addEventListener('click', () => openFoodSelector('breakfast'));
+
+      // Schedule
       document.getElementById('add-event-btn').addEventListener('click', () => openEventModal());
-      document.getElementById('save-schedule-template-btn').addEventListener('click', () => {
-        const name = prompt('模板名称'); if (!name) return;
-        state.schedule.templates.push({ id: uid(), name, events: JSON.parse(JSON.stringify(state.schedule.events)) });
-        saveState(); showNotify('已保存模板', name);
-      });
+      document.getElementById('save-schedule-template-btn').addEventListener('click', () => { const name = prompt('模板名称'); if (!name) return; state.schedule.templates.push({ id: uid(), name, events: JSON.parse(JSON.stringify(state.schedule.events)) }); saveState(); showNotify('已保存模板', name); });
 
-      // training
+      // Training
       document.getElementById('training-plan-select').addEventListener('change', e => { state.training.currentPlan = e.target.value; saveState(); });
-      document.getElementById('save-training-template-btn').addEventListener('click', () => {
-        const name = prompt('模板名称'); if (!name) return;
-        state.training.templates.push({ id: uid(), name, days: JSON.parse(JSON.stringify(currentPlan().days)) });
-        saveState(); showNotify('已保存模板', name);
-      });
+      document.getElementById('save-training-template-btn').addEventListener('click', () => { const name = prompt('模板名称'); if (!name) return; state.training.templates.push({ id: uid(), name, days: JSON.parse(JSON.stringify(currentPlan().days)) }); saveState(); showNotify('已保存模板', name); });
 
-      // settings
-      document.getElementById('save-profile-btn').addEventListener('click', () => {
-        state.profile.height = parseFloat(document.getElementById('setting-height').value) || state.profile.height;
-        state.profile.birthYear = parseInt(document.getElementById('setting-birth').value) || state.profile.birthYear;
-        state.profile.gender = document.getElementById('setting-gender').value;
-        saveState(); showNotify('资料已保存', '');
-      });
-      document.getElementById('theme-toggle').addEventListener('click', function() {
-        this.classList.toggle('on'); state.settings.theme = this.classList.contains('on') ? 'dark' : 'light';
-        applyTheme(); saveState();
-      });
+      // Settings
+      document.getElementById('save-profile-btn').addEventListener('click', () => { state.profile.height = parseFloat(document.getElementById('setting-height').value) || state.profile.height; state.profile.birthYear = parseInt(document.getElementById('setting-birth').value) || state.profile.birthYear; state.profile.gender = document.getElementById('setting-gender').value; saveState(); showNotify('资料已保存', ''); });
+      document.getElementById('theme-toggle').addEventListener('click', function() { this.classList.toggle('on'); state.settings.theme = this.classList.contains('on') ? 'dark' : 'light'; applyTheme(); saveState(); });
       document.getElementById('font-size-select').addEventListener('change', e => { state.settings.fontSize = e.target.value; applyFont(); saveState(); });
-      document.getElementById('notify-toggle').addEventListener('click', function() {
-        this.classList.toggle('on'); state.settings.notifications = this.classList.contains('on');
-        if (state.settings.notifications && 'Notification' in window) Notification.requestPermission();
-        saveState();
-      });
-      document.getElementById('encrypt-toggle').addEventListener('click', function() {
-        this.classList.toggle('on'); state.settings.encryptionEnabled = this.classList.contains('on');
-        const panel = document.getElementById('encrypt-panel');
-        if (state.settings.encryptionEnabled) panel.classList.remove('hidden'); else panel.classList.add('hidden');
-        saveState();
-      });
-      document.getElementById('set-password-btn').addEventListener('click', async () => {
-        const pwd = document.getElementById('encrypt-password').value;
-        if (!pwd || pwd.length < 6) { showNotify('密码太短', '请至少输入 6 位'); return; }
-        await persistEncrypted(pwd);
-        state.settings.encryptionEnabled = true;
-        sessionPassword = pwd;
-        showNotify('加密已启用', '下次打开需输入密码');
-      });
-      document.getElementById('unlock-btn').addEventListener('click', () => {
-        const pwd = document.getElementById('unlock-password').value;
-        if (!pwd) { showNotify('请输入密码', ''); return; }
-        loadEncrypted(pwd).catch(() => showNotify('密码错误', '无法解密数据'));
-      });
-      document.getElementById('reset-data-btn').addEventListener('click', () => {
-        if (confirm('确定清空加密数据并恢复默认？此操作不可恢复。')) {
-          localStorage.removeItem('weightLossProState');
-          state = createDefaultState(); applyTheme(); applyFont();
-          document.getElementById('password-overlay').classList.remove('show');
-          updateAll(); showNotify('数据已清空', '');
-        }
-      });
+      document.getElementById('notify-toggle').addEventListener('click', function() { this.classList.toggle('on'); state.settings.notifications = this.classList.contains('on'); if (state.settings.notifications && 'Notification' in window) Notification.requestPermission(); saveState(); });
+      document.getElementById('encrypt-toggle').addEventListener('click', function() { this.classList.toggle('on'); state.settings.encryptionEnabled = this.classList.contains('on'); const panel = document.getElementById('encrypt-panel'); if (state.settings.encryptionEnabled) panel.classList.remove('hidden'); else panel.classList.add('hidden'); saveState(); });
+      document.getElementById('set-password-btn').addEventListener('click', async () => { const pwd = document.getElementById('encrypt-password').value; if (!pwd || pwd.length < 6) { showNotify('密码太短', '请至少输入 6 位'); return; } await persistEncrypted(pwd); state.settings.encryptionEnabled = true; sessionPassword = pwd; showNotify('加密已启用', '下次打开需输入密码'); });
+      document.getElementById('unlock-btn').addEventListener('click', () => { const pwd = document.getElementById('unlock-password').value; if (!pwd) { showNotify('请输入密码', ''); return; } loadEncrypted(pwd).catch(() => showNotify('密码错误', '无法解密数据')); });
+      document.getElementById('reset-data-btn').addEventListener('click', () => { if (confirm('确定清空加密数据并恢复默认？此操作不可恢复。')) { localStorage.removeItem('weightLossProState'); state = createDefaultState(); sessionPassword = null; applyTheme(); applyFont(); document.getElementById('password-overlay').classList.remove('show'); document.getElementById('onboarding').classList.add('show'); wizardStep = 0; renderWizardStep(); updateAll(); showNotify('数据已清空', ''); } });
       document.getElementById('download-ics-btn').addEventListener('click', generateICS);
       document.getElementById('export-data-btn').addEventListener('click', exportData);
       document.getElementById('import-data-btn').addEventListener('click', () => document.getElementById('import-file').click());
       document.getElementById('import-file').addEventListener('change', importData);
-      document.getElementById('clear-data-btn').addEventListener('click', () => {
-        if (confirm('确定清空所有本地数据？此操作不可恢复。')) {
-          localStorage.removeItem('weightLossProState'); state = createDefaultState(); applyTheme(); applyFont(); updateAll(); showNotify('数据已清空', '');
-        }
-      });
+      document.getElementById('clear-data-btn').addEventListener('click', () => { if (confirm('确定清空所有本地数据？此操作不可恢复。')) { localStorage.removeItem('weightLossProState'); state = createDefaultState(); sessionPassword = null; applyTheme(); applyFont(); document.getElementById('onboarding').classList.add('show'); wizardStep = 0; renderWizardStep(); updateAll(); showNotify('数据已清空', ''); } });
+      document.getElementById('rerun-wizard-btn').addEventListener('click', () => { if (confirm('重新运行向导会保留已有数据，但会重新生成目标和计划，继续吗？')) { wizardStep = 0; document.getElementById('onboarding').classList.add('show'); renderWizardStep(); } });
     }
 
-    function exportData() {
-      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = `减肥监控台备份_${toDateStr()}.json`;
-      document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-      showNotify('导出成功', '数据 JSON 已下载');
-    }
-    function importData(e) {
-      const file = e.target.files[0]; if (!file) return;
-      const reader = new FileReader();
-      reader.onload = ev => {
-        try {
-          const data = JSON.parse(ev.target.result);
-          if (confirm('导入将覆盖当前所有数据，确定吗？')) {
-            state = { ...createDefaultState(), ...data };
-            applyTheme(); applyFont(); saveState(); showNotify('导入成功', '数据已恢复');
-          }
-        } catch (err) { showNotify('导入失败', '文件格式不正确'); }
-      };
-      reader.readAsText(file);
-      e.target.value = '';
-    }
+    function exportData() { const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `减肥监控台备份_${toDateStr()}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); showNotify('导出成功', '数据 JSON 已下载'); }
+    function importData(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = ev => { try { const data = JSON.parse(ev.target.result); if (confirm('导入将覆盖当前所有数据，确定吗？')) { state = { ...createDefaultState(), ...data }; applyTheme(); applyFont(); saveState(); showNotify('导入成功', '数据已恢复'); } } catch (err) { showNotify('导入失败', '文件格式不正确'); } }; reader.readAsText(file); e.target.value = ''; }
 
     function generateICS() {
       const events = state.schedule.events.filter(e => e.remind).sort((a, b) => timeToMin(a.time) - timeToMin(b.time));
       let ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//减肥监控台Pro//Weight Loss Plan//ZH-CN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nX-WR-CALNAME:减肥计划提醒\nX-WR-TIMEZONE:Asia/Shanghai\n';
-      events.forEach((e, i) => {
-        const [h, m] = e.time.split(':').map(Number);
-        const eh = String(h).padStart(2, '0');
-        const em = String(m).padStart(2, '0');
-        const dh = String(Math.floor((h * 60 + m + (e.duration || 0)) / 60) % 24).padStart(2, '0');
-        const dm = String((m + (e.duration || 0)) % 60).padStart(2, '0');
-        ics += `BEGIN:VEVENT\nUID:evt-${i}@weight-loss-pro\nDTSTART;TZID=Asia/Shanghai:20260805T${eh}${em}00\nDTEND;TZID=Asia/Shanghai:20260805T${dh}${dm}00\nRRULE:FREQ=DAILY\nSUMMARY:${e.name}\nDESCRIPTION:${e.desc || ''}\nBEGIN:VALARM\nACTION:DISPLAY\nDESCRIPTION:${e.name}\nTRIGGER:-PT${Math.max(0, e.remindBefore || 0)}M\nEND:VALARM\nEND:VEVENT\n`;
-      });
-      ics += 'END:VCALENDAR';
-      const blob = new Blob([ics], { type: 'text/calendar' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = '减肥计划提醒.ics';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-      showNotify('日历文件已生成', '请在 iOS 上打开导入');
+      events.forEach((e, i) => { const [h, m] = e.time.split(':').map(Number); const eh = String(h).padStart(2, '0'); const em = String(m).padStart(2, '0'); const dh = String(Math.floor((h * 60 + m + (e.duration || 0)) / 60) % 24).padStart(2, '0'); const dm = String((m + (e.duration || 0)) % 60).padStart(2, '0'); ics += `BEGIN:VEVENT\nUID:evt-${i}@weight-loss-pro\nDTSTART;TZID=Asia/Shanghai:20260805T${eh}${em}00\nDTEND;TZID=Asia/Shanghai:20260805T${dh}${dm}00\nRRULE:FREQ=DAILY\nSUMMARY:${e.name}\nDESCRIPTION:${e.desc || ''}\nBEGIN:VALARM\nACTION:DISPLAY\nDESCRIPTION:${e.name}\nTRIGGER:-PT${Math.max(0, e.remindBefore || 0)}M\nEND:VALARM\nEND:VEVENT\n`; });
+      ics += 'END:VCALENDAR'; const blob = new Blob([ics], { type: 'text/calendar' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = '减肥计划提醒.ics'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); showNotify('日历文件已生成', '请在 iOS 上打开导入');
     }
 
     function checkReminders() {
       if (!state.settings.notifications) return;
-      const now = new Date();
-      const timeKey = now.getHours() * 100 + now.getMinutes();
+      const now = new Date(); const timeKey = now.getHours() * 100 + now.getMinutes();
       if (lastNotified === timeKey || now.getSeconds() !== 0) return;
       const currentMin = now.getHours() * 60 + now.getMinutes();
-      state.schedule.events.forEach(s => {
-        const startMin = timeToMin(s.time) - (s.remindBefore || 0);
-        if (startMin === currentMin && s.remind) {
-          lastNotified = timeKey;
-          showNotify(s.name, s.desc || '到时间了');
-          if ('Notification' in window && Notification.permission === 'granted') {
-            try { new Notification(s.name, { body: s.desc, icon: 'icon.svg' }); } catch (e) {}
-          }
-        }
-      });
+      state.schedule.events.forEach(s => { const startMin = timeToMin(s.time) - (s.remindBefore || 0); if (startMin === currentMin && s.remind) { lastNotified = timeKey; showNotify(s.name, s.desc || '到时间了'); if ('Notification' in window && Notification.permission === 'granted') { try { new Notification(s.name, { body: s.desc, icon: 'icon.svg' }); } catch (e) {} } } });
     }
+    function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('service-worker.js').catch(err => console.log('SW 注册失败', err)); } }
 
-    function registerSW() {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js').catch(err => console.log('SW 注册失败', err));
-      }
-    }
-
-    function updateAll() {
-      renderToday(); renderData(); renderScheduleEditor(); renderTraining(); renderDiet(); renderSettings();
-    }
+    function updateAll() { renderToday(); renderData(); renderDiet(); renderScheduleEditor(); renderTraining(); renderSettings(); }
 
     async function init() {
-      registerSW();
-      await loadState();
+      registerSW(); await loadState();
       bindEvents();
+      if (!state.meta || state.meta.onboardingComplete !== true) { document.getElementById('onboarding').classList.add('show'); renderWizardStep(); }
       updateAll();
-      setInterval(() => {
-        document.getElementById('current-time').textContent = fmtTime(new Date());
-        document.getElementById('current-date').textContent = fmtDate(new Date());
-        renderToday(); checkReminders();
-      }, 1000);
+      setInterval(() => { document.getElementById('current-time').textContent = fmtTime(new Date()); document.getElementById('current-date').textContent = fmtDate(new Date()); renderToday(); checkReminders(); }, 1000);
     }
 
     document.addEventListener('DOMContentLoaded', init);
